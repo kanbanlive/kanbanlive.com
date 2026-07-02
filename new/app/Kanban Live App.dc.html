@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  ::selection { background: #F5A623; color: #1F1B17; }
+  .kl-scroll::-webkit-scrollbar { height:10px; width:10px; }
+  .kl-scroll::-webkit-scrollbar-thumb { background:var(--border-strong); border-radius:999px; }
+  .ds-field { font-family:'Hanken Grotesk',sans-serif; font-size:14px; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:9px 12px; outline:none; transition:border-color .15s ease, box-shadow .15s ease; }
+  .ds-field::placeholder { color:var(--text-3); }
+  .ds-field:focus { border-color:var(--accent); box-shadow:0 0 0 3px rgba(232,68,46,.14); }
+  .kl-link { color:var(--accent); text-decoration:none; cursor:pointer; }
+  .kl-link:hover { text-decoration:underline; }
+  .kl-nav { cursor:pointer; transition:background .12s ease; }
+  .kl-nav:hover { background:var(--surface-2) !important; }
+
+  /* ---------- Responsive ---------- */
+  .kl-hamburger { display:none; }
+  .kl-backdrop { display:none; }
+  .kl-viewselect { display:none; }
+  @media (max-width:1023px) {
+    .kl-hamburger { display:flex !important; }
+    .kl-sidebar {
+      position:fixed !important; top:0; left:0; height:100vh; width:274px !important;
+      z-index:80; transform:translateX(-100%); transition:transform .22s ease;
+      background:var(--bg); box-shadow:var(--shadow-lg); overflow-y:auto;
+      border-right:1px solid var(--border);
+    }
+    .kl-sidebar[data-open="true"] { transform:none; }
+    .kl-backdrop[data-open="true"] { display:block !important; position:fixed; inset:0; background:rgba(0,0,0,.36); z-index:70; }
+    /* Touch targets ≥ 44px */
+    .kl-nav { min-height:44px; }
+    .kl-hamburger { width:44px !important; height:44px !important; }
+    button[aria-label="Toggle theme"] { width:44px !important; height:44px !important; }
+    .kl-btn { min-height:44px !important; display:inline-flex !important; align-items:center; }
+    .kl-viewtabs span { min-height:44px; display:inline-flex !important; align-items:center; }
+    .kl-pager > span { min-height:44px !important; height:auto !important; }
+  }
+  @media (max-width:640px) {
+    .kl-topnav { display:none !important; }
+    .kl-usermeta { display:none !important; }
+    .kl-pad { padding-left:16px !important; padding-right:16px !important; }
+    .kl-main { padding-left:16px !important; padding-right:16px !important; }
+    .kl-h1 { font-size:23px !important; }
+  }
+  /* Stacked-card tables on narrow screens */
+  @media (max-width:560px) {
+    .kl-viewtabs { display:none !important; }
+    .kl-viewselect { display:block !important; }
+    .kl-thead { display:none !important; }
+    .kl-trow { grid-template-columns:1fr !important; gap:5px !important; padding:14px 16px !important; align-items:start !important; }
+    .kl-trow > * { min-width:0; justify-self:stretch !important; }
+    .kl-trow > [data-label]::before {
+      content:attr(data-label); display:block; font-size:9.5px; font-weight:700;
+      letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); margin-bottom:2px;
+    }
+    .kl-actions { justify-content:flex-start !important; }
+    .kl-viewselect { min-height:44px; }
+    .kl-trow { min-height:44px; }
+  }
+</style>
+</helmet>
+<div ref="{{ setRoot }}" style="--bg:#F6F2EC; --surface:#FFFFFF; --surface-2:#FBF8F3; --border:#EAE3D8; --border-strong:#DDD3C4; --text:#211C16; --text-2:#6E6459; --text-3:#9A8F81; --accent:#E8442E; --accent-2:#F5A623; --accent-ink:#FFFFFF; --nav-bg:rgba(246,242,236,0.9); --shadow:0 1px 2px rgba(33,28,22,.05), 0 14px 34px -14px rgba(33,28,22,.16); --shadow-lg:0 40px 90px -34px rgba(33,28,22,.4); background:var(--bg); color:var(--text); font-family:'Hanken Grotesk', system-ui, sans-serif; min-height:100vh; overflow-x:hidden;">
+
+  <!-- ============ TOP BAR ============ -->
+  <div style="position:sticky; top:0; z-index:60; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); background:var(--nav-bg); border-bottom:1px solid var(--border);">
+    <div class="kl-pad" style="max-width:1560px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; gap:26px;">
+      <button onClick="{{ toggleNav }}" class="kl-hamburger" aria-label="Open navigation" style="width:36px; height:36px; border-radius:10px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); cursor:pointer; align-items:center; justify-content:center; font-size:16px; line-height:1; flex:none; padding:0;">☰</button>
+      <div onClick="{{ goPanel }}" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+        <svg width="28" height="25" viewBox="0 0 394 350" fill="none" style="display:block; flex:none;" aria-hidden="true">
+          <path d="M72.618,95.705C72.106,43.933 113.668,1.536 165.443,1.02L269.296,0.005C321.068,-0.514 363.452,41.049 363.965,92.817L364.121,108.483C364.631,160.258 323.074,202.645 271.306,203.155L167.446,204.18C115.674,204.695 73.293,163.136 72.781,111.364L72.618,95.705Z" fill="#FCE788"></path>
+          <path d="M0.005,158.412C-0.505,106.637 41.055,64.247 92.82,63.744L196.683,62.709C248.452,62.197 290.833,103.759 291.345,155.537L291.508,171.19C292.02,222.972 250.461,265.356 198.686,265.869L94.833,266.89C43.058,267.409 0.661,225.844 0.164,174.078L0.005,158.412Z" fill="#E7411A"></path>
+          <path d="M102.407,241.097C101.897,189.325 143.463,146.934 195.232,146.419L299.085,145.394C350.863,144.881 393.25,186.437 393.753,238.212L393.919,253.878C394.432,305.653 352.869,348.034 301.097,348.553L197.247,349.578C145.463,350.09 103.082,308.534 102.572,256.759L102.407,241.097Z" fill="#F7B00C"></path>
+        </svg>
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; letter-spacing:-.02em; color:var(--text);">Kanban Live</span>
+      </div>
+      <div class="kl-topnav" style="display:flex; align-items:center; gap:4px;">
+        <span onClick="{{ goSites }}" style="font-size:14px; font-weight:600; color:{{ topSitesFg }}; background:{{ topSitesBg }}; padding:7px 13px; border-radius:9px; cursor:pointer;">Sites</span>
+        <span style="font-size:14px; font-weight:600; color:var(--text-2); padding:7px 13px; border-radius:9px; cursor:pointer;">Parts</span>
+        <span style="font-size:14px; font-weight:600; color:var(--text-2); padding:7px 13px; border-radius:9px; cursor:pointer;">Users</span>
+      </div>
+      <div style="margin-left:auto; display:flex; align-items:center; gap:12px;">
+        <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:36px; height:36px; border-radius:10px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:15px; line-height:1;">{{ themeIcon }}</button>
+        <span style="font-size:13px; font-weight:600; color:var(--text-2); display:flex; align-items:center; gap:6px; cursor:pointer;">Settings</span>
+        <div style="display:flex; align-items:center; gap:9px; padding-left:12px; border-left:1px solid var(--border);">
+          <span style="width:32px; height:32px; border-radius:50%; background:var(--accent-2); display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; color:#4A2E00;">CR</span>
+          <div class="kl-usermeta" style="line-height:1.25;"><div style="font-size:13px; font-weight:700; color:var(--text);">C. Rivera</div><div style="font-size:11px; color:var(--text-3);">c.rivera@kanbanlive.com</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BODY ============ -->
+  <div style="max-width:1560px; margin:0 auto; display:flex; align-items:stretch;">
+
+    <!-- ---------- SIDEBAR ---------- -->
+    <sc-if value="{{ showSidebar }}" hint-placeholder-val="{{ true }}">
+    <div class="kl-backdrop" data-open="{{ navOpenStr }}" onClick="{{ closeNav }}"></div>
+    <aside class="kl-sidebar" data-open="{{ navOpenStr }}" style="width:246px; flex:none; border-right:1px solid var(--border); padding:26px 20px; display:flex; flex-direction:column; gap:22px;">
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--text-3);">Site</div>
+        <div onClick="{{ goSiteDemand }}" class="kl-link" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; letter-spacing:-.02em; color:var(--text); margin-top:3px;">{{ siteName }}</div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:10px;">Status</div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <sc-for list="{{ statusMenu }}" as="m" hint-placeholder-count="4">
+            <div onClick="{{ m.onClick }}" class="kl-nav" style="display:flex; align-items:center; gap:9px; padding:8px; border-radius:8px; cursor:pointer; color:{{ m.fg }}; background:{{ m.bg }};">
+              <sc-if value="{{ m.neutral }}" hint-placeholder-val="{{ true }}"><span style="width:6px; height:6px; border-radius:50%; flex:none; background:currentColor; opacity:{{ m.dotOpacity }};"></span></sc-if>
+              <sc-if value="{{ m.colored }}" hint-placeholder-val="{{ true }}"><span style="width:9px; height:9px; border-radius:50%; flex:none; background:{{ m.dot }};"></span></sc-if>
+              <span class="kl-nav-label" style="font-size:13px; font-weight:600;">{{ m.label }}</span>
+              <span style="margin-left:auto; font-size:12px; font-weight:700; color:{{ m.chipFg }}; background:{{ m.chipBg }}; padding:1px 9px; border-radius:999px;">{{ m.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:6px;">View</div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+          <div onClick="{{ goHistory }}" class="kl-nav" style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; color:{{ navHistoryFg }}; background:{{ navHistoryBg }};"><span style="width:6px; height:6px; border-radius:50%; background:currentColor; opacity:{{ navHistoryDot }};"></span><span class="kl-nav-label">History</span></div>
+          <div onClick="{{ goUsages }}" class="kl-nav" style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:9px; font-size:13px; font-weight:600; cursor:pointer; color:{{ navUsagesFg }}; background:{{ navUsagesBg }};"><span style="width:6px; height:6px; border-radius:50%; background:currentColor; opacity:{{ navUsagesDot }};"></span><span class="kl-nav-label">Part Usages</span></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text-3); margin-bottom:10px;">Areas</div>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <sc-for list="{{ areas }}" as="area" hint-placeholder-count="3">
+            <div>
+              <div onClick="{{ area.onOpen }}" class="kl-nav" style="font-size:12px; font-weight:700; color:{{ area.fg }}; background:{{ area.bg }}; margin-bottom:5px; padding:4px 8px; border-radius:7px;">{{ area.name }}</div>
+              <div style="display:flex; flex-direction:column;">
+                <sc-for list="{{ area.panels }}" as="z" hint-placeholder-count="4">
+                  <div onClick="{{ z.onOpen }}" class="kl-nav" style="display:flex; align-items:center; gap:8px; padding:5px 8px 5px 12px; border-radius:7px; cursor:pointer; background:{{ z.bg }};">
+                    <span class="kl-nav-label" style="font-size:13px; font-weight:600; color:{{ z.fg }};">{{ z.code }}</span>
+                    <span style="margin-left:auto; display:flex; gap:5px;">
+                      <sc-if value="{{ z.empty }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px; font-weight:700; color:#fff; background:#E5372A; padding:0 7px; border-radius:999px; min-width:18px; text-align:center;">{{ z.empty }}</span></sc-if>
+                      <sc-if value="{{ z.requires }}" hint-placeholder-val="{{ true }}"><span style="font-size:11px; font-weight:700; color:#4A2E00; background:#F5A623; padding:0 7px; border-radius:999px; min-width:18px; text-align:center;">{{ z.requires }}</span></sc-if>
+                    </span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </aside>
+    </sc-if>
+
+    <!-- ---------- MAIN ---------- -->
+    <main class="kl-main" style="flex:1; min-width:0; padding:30px 32px 80px;">
+
+      <!-- ===== SITES ===== -->
+      <sc-if value="{{ isSites }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:30px; letter-spacing:-.03em; margin:0; color:var(--text);">Sites</h1>
+          <span class="kl-btn" style="background:var(--accent); color:var(--accent-ink); font-size:14px; font-weight:600; padding:10px 18px; border-radius:10px; box-shadow:0 8px 20px -8px var(--accent); cursor:pointer;">+ New Site</span>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+          <div class="kl-thead" style="display:grid; grid-template-columns:1.6fr .8fr .8fr auto; padding:13px 24px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); gap:16px;"><span>Name</span><span>Requires stock</span><span>Empty</span><span></span></div>
+          <sc-for list="{{ sites }}" as="site" hint-placeholder-count="3">
+            <div class="kl-trow" style="display:grid; grid-template-columns:1.6fr .8fr .8fr auto; padding:16px 24px; border-top:1px solid var(--border); align-items:center; gap:16px;">
+              <div onClick="{{ site.onOpen }}" style="display:flex; align-items:center; gap:11px; cursor:pointer;">
+                <span style="width:34px; height:34px; border-radius:9px; background:var(--surface-2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:14px;">▦</span>
+                <span style="font-size:15px; font-weight:600; color:var(--accent);">{{ site.name }}</span>
+              </div>
+              <span data-label="Requires stock"><span style="font-size:12px; font-weight:700; color:#4A2E00; background:#F5A623; padding:2px 11px; border-radius:999px;">{{ site.requires }}</span></span>
+              <span data-label="Empty"><span style="font-size:12px; font-weight:700; color:#fff; background:#E5372A; padding:2px 11px; border-radius:999px;">{{ site.empty }}</span></span>
+              <span class="kl-actions" style="display:flex; gap:14px; justify-content:flex-end; font-size:13px; font-weight:600;"><span class="kl-link">Edit</span><span style="color:var(--text-3); cursor:pointer;">Delete</span></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== PANEL / BIN GRID ===== -->
+      <sc-if value="{{ isPanel }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font-size:13px; color:var(--text-3); margin-bottom:14px;"><span class="kl-link" onClick="{{ goSiteDemand }}">{{ siteName }}</span> / <span class="kl-link" onClick="{{ goAreaDemand }}">{{ zoneArea }}</span> / <span style="color:var(--text-2);">{{ zoneCode }}</span></div>
+        <div style="display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:20px;">
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0; color:var(--text);">{{ zoneCode }}</h1>
+          <span style="display:flex; gap:12px; font-size:13px; font-weight:600;"><span class="kl-link">Edit</span><span style="color:var(--text-3); cursor:pointer;">Delete</span></span>
+          <div style="margin-left:auto; display:flex; align-items:center; gap:8px;">
+            <div class="kl-viewtabs" style="display:flex; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:3px;">
+              <sc-for list="{{ viewTabs }}" as="t" hint-placeholder-count="5"><span onClick="{{ t.onClick }}" style="font-size:13px; font-weight:600; padding:6px 13px; border-radius:8px; cursor:pointer; white-space:nowrap; color:{{ t.fg }}; background:{{ t.bg }};">{{ t.label }}</span></sc-for>
+            </div>
+            <select class="kl-viewselect" onChange="{{ setViewSelect }}" value="{{ curView }}" style="font-family:'Hanken Grotesk',sans-serif; font-size:13px; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); border-radius:9px; padding:8px 12px; cursor:pointer; outline:none;">
+              <option value="grid">Grid</option>
+              <option value="overview">Overview</option>
+              <option value="empty">Empty</option>
+              <option value="requires">Requires stock</option>
+              <option value="all">All</option>
+            </select>
+            <span class="kl-btn" style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); padding:8px 15px; border-radius:9px; cursor:pointer;">Download</span>
+            <span class="kl-btn" style="font-size:13px; font-weight:600; color:var(--accent-ink); background:var(--accent); padding:8px 15px; border-radius:9px; cursor:pointer;">+ New Bin</span>
+          </div>
+        </div>
+
+        <sc-if value="{{ isGridView }}" hint-placeholder-val="{{ true }}">
+        <div class="kl-scroll" style="overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:16px;">
+          <div style="min-width:1040px; display:grid; grid-template-columns:28px repeat(10, 1fr); gap:9px;">
+            <div></div>
+            <sc-for list="{{ gridCols }}" as="c" hint-placeholder-count="10"><div style="text-align:center; font-size:12px; font-weight:700; color:var(--text-3);">{{ c }}</div></sc-for>
+            <sc-for list="{{ grid }}" as="row" hint-placeholder-count="5">
+              <div style="display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--text-3);">{{ row.label }}</div>
+              <sc-for list="{{ row.cells }}" as="cell" hint-placeholder-count="10">
+                <div onClick="{{ cell.onOpen }}" style="background:{{ cell.bg }}; border:{{ cell.cellBorder }}; border-left:{{ cell.leftBorder }}; border-radius:10px; padding:9px 10px; min-height:92px; cursor:{{ cell.cursor }}; display:flex; flex-direction:column; gap:2px; overflow:hidden;">
+                  <sc-if value="{{ cell.filled }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+                      <span style="font-size:12px; font-weight:700; color:{{ cell.locColor }};">{{ cell.loc }}</span>
+                      <sc-if value="{{ cell.showDot }}" hint-placeholder-val="{{ true }}"><span style="width:9px; height:9px; border-radius:50%; flex:none; background:{{ cell.dot }};"></span></sc-if>
+                    </div>
+                    <div style="font-family:ui-monospace,monospace; font-size:11px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ cell.sku }}</div>
+                    <div style="font-size:11px; color:var(--text-2); line-height:1.25; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">{{ cell.desc }}</div>
+                    <div style="margin-top:auto; font-family:ui-monospace,monospace; font-size:11px; color:var(--text-3);">{{ cell.qtyLabel }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </sc-for>
+          </div>
+        </div>
+        </sc-if>
+
+        <sc-if value="{{ isListView }}" hint-placeholder-val="{{ true }}">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+          <div class="kl-thead" style="display:grid; grid-template-columns:88px 140px 1fr 132px; padding:12px 24px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); gap:16px;"><span>Location</span><span>Part number</span><span>Description</span><span>Demand status</span></div>
+          <sc-for list="{{ binList }}" as="b" hint-placeholder-count="6">
+            <div class="kl-trow" style="display:grid; grid-template-columns:88px 140px 1fr 132px; padding:{{ rowPad }}; border-top:1px solid var(--border); align-items:center; gap:16px; font-size:13px;">
+              <span style="display:flex; align-items:center; gap:9px;"><span style="width:10px; height:10px; border-radius:50%; flex:none; background:{{ b.dot }};"></span><span class="kl-link" onClick="{{ b.onOpen }}">{{ b.loc }}</span></span>
+              <span class="kl-link" data-label="Part number" style="font-family:ui-monospace,monospace;">{{ b.sku }}</span>
+              <span data-label="Description" style="color:var(--text-2);">{{ b.desc }}</span>
+              <span data-label="Demand status" style="font-weight:600; color:{{ b.demandColor }};">{{ b.demandLabel }}</span>
+            </div>
+          </sc-for>
+        </div>
+        </sc-if>
+      </div>
+      </sc-if>
+
+      <!-- ===== BIN DETAIL ===== -->
+      <sc-if value="{{ isBin }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width:1080px;">
+        <div style="font-size:13px; color:var(--text-3); margin-bottom:14px;"><span class="kl-link" onClick="{{ goSiteDemand }}">{{ siteName }}</span> / <span class="kl-link" onClick="{{ goAreaDemand }}">{{ zoneArea }}</span> / <span class="kl-link" onClick="{{ goPanel }}">{{ binZone }}</span> / <span style="color:var(--text-2);">{{ binLoc }}</span></div>
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0; color:var(--text);">{{ binLoc }}</h1>
+          <span style="display:flex; gap:12px; font-size:13px; font-weight:600;"><span class="kl-link">Edit</span><span style="color:var(--text-3); cursor:pointer;">Delete</span></span>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:26px 28px; margin-bottom:22px;">
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:var(--text); margin-bottom:20px;">Bin details</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px 56px;">
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Bin size</span><span style="font-size:14px; font-weight:600; color:var(--text);">1</span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Part number</span><span class="kl-link" style="font-family:ui-monospace,monospace; font-size:14px; font-weight:600;">SKU-10482</span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Description</span><span style="font-size:14px; color:var(--text); text-align:right;">Flat washer M8 A2</span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Unit of measure</span><span style="font-size:14px; color:var(--text);">EACH</span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Last scanned</span><span style="font-size:14px; color:var(--text); text-align:right;">Jun 30, 2026 15:53 <span style="color:var(--text-3);">· a day ago</span></span></div>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:center;"><span style="font-size:13px; color:var(--text-3);">Status</span>
+                <span style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:50%; background:#F5A623;"></span><select class="ds-field" style="padding:7px 10px;"><option>Requires stock</option><option>Empty</option><option>Has stock</option></select></span>
+              </div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:center;"><span style="font-size:13px; color:var(--text-3);">Demand status</span><select class="ds-field" style="padding:7px 10px;"><option>New</option><option>In progress</option><option>Complete</option></select></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:center;"><span style="font-size:13px; color:var(--text-3);">Quantity</span><span style="display:flex; gap:8px;"><input class="ds-field" type="number" defaultValue="100" style="width:96px; text-align:right;"><span style="font-size:13px; font-weight:600; color:var(--accent); background:var(--surface-2); border:1px solid var(--border-strong); padding:8px 16px; border-radius:9px; cursor:pointer;">Update</span></span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Reorder point</span><span style="font-size:14px; font-weight:600; color:var(--text);">100</span></div>
+              <div style="display:flex; justify-content:space-between; gap:16px; align-items:baseline;"><span style="font-size:13px; color:var(--text-3);">Reorder qty · PPQ</span><span style="font-size:14px; font-weight:600; color:var(--text);">100 · 100</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+          <div style="padding:20px 24px 4px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17px; color:var(--text);">History</div>
+          <div class="kl-thead" style="display:grid; grid-template-columns:132px 1fr 108px; padding:12px 24px; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3);"><span>Timestamp</span><span>Change</span><span>User</span></div>
+          <sc-for list="{{ binHistory }}" as="h" hint-placeholder-count="5">
+            <div class="kl-trow" style="display:grid; grid-template-columns:132px 1fr 108px; padding:13px 24px; border-top:1px solid var(--border); align-items:center; font-size:13px;">
+              <span style="color:var(--text-2);">{{ h.ts }}</span>
+              <span data-label="Change" style="display:flex; align-items:center; gap:10px;"><span style="width:12px; height:12px; border-radius:50%; flex:none; background:{{ h.fromBg }}; border:{{ h.fromBorder }};"></span><span style="color:var(--text-3);">→</span><span style="width:12px; height:12px; border-radius:50%; flex:none; background:{{ h.toBg }}; border:{{ h.toBorder }};"></span><span style="color:var(--text); margin-left:2px;">{{ h.text }}</span></span>
+              <span data-label="User" style="color:var(--text-2);">{{ h.user }}</span>
+            </div>
+          </sc-for>
+          <div style="padding:14px 24px; border-top:1px solid var(--border);"><span class="kl-link" onClick="{{ goHistory }}" style="font-size:13px; font-weight:600;">View all history →</span></div>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== HISTORY ===== -->
+      <sc-if value="{{ isHistory }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0 0 20px; color:var(--text);">History</h1>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+          <div class="kl-thead" style="display:grid; grid-template-columns:132px 1.3fr 2fr 108px; padding:13px 24px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); gap:16px;"><span>Timestamp</span><span>Location</span><span>Change</span><span>User</span></div>
+          <sc-for list="{{ historyRows }}" as="h" hint-placeholder-count="10">
+            <div class="kl-trow" style="display:grid; grid-template-columns:132px 1.3fr 2fr 108px; padding:{{ rowPad }}; border-top:1px solid var(--border); align-items:center; gap:16px; font-size:13px;">
+              <span data-label="Timestamp" style="color:var(--text-2);">{{ h.ts }}</span>
+              <span class="kl-link" data-label="Location" onClick="{{ h.onOpen }}" style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ h.loc }}</span>
+              <span data-label="Change" style="display:flex; align-items:center; gap:10px;">
+                <sc-if value="{{ h.isScan }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px; font-weight:600; color:var(--accent-2);">◈ {{ h.text }}</span></sc-if>
+                <sc-if value="{{ h.isChange }}" hint-placeholder-val="{{ true }}"><span style="display:flex; align-items:center; gap:10px;"><span style="width:12px; height:12px; border-radius:50%; flex:none; background:{{ h.fromBg }}; border:{{ h.fromBorder }};"></span><span style="color:var(--text-3);">→</span><span style="width:12px; height:12px; border-radius:50%; flex:none; background:{{ h.toBg }}; border:{{ h.toBorder }};"></span><span style="color:var(--text);">{{ h.text }}</span></span></sc-if>
+              </span>
+              <span data-label="User" style="color:var(--text-2);">{{ h.user }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div class="kl-pager" style="display:flex; gap:6px; margin-top:20px; align-items:center;">
+          <span style="font-size:13px; font-weight:700; color:var(--accent-ink); background:var(--accent); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center;">1</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer;">2</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer;">3</span>
+          <span style="font-size:13px; color:var(--text-3); padding:0 6px;">…</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); padding:0 14px; height:34px; border-radius:9px; display:flex; align-items:center; cursor:pointer;">Next ›</span>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== STATUS FILTER (site-wide) ===== -->
+      <sc-if value="{{ isFilter }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0; color:var(--text);">{{ filterTitle }}</h1>
+        <div style="font-size:14px; color:var(--text-2); margin:4px 0 20px;">{{ filterCount }} bins across all areas</div>
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+          <div class="kl-thead" style="display:grid; grid-template-columns:120px 132px 1fr 150px 76px; padding:12px 24px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); gap:16px;"><span>Location</span><span>Part number</span><span>Description</span><span>Status</span><span>Demand</span></div>
+          <sc-for list="{{ filterBins }}" as="b" hint-placeholder-count="8">
+            <div class="kl-trow" style="display:grid; grid-template-columns:120px 132px 1fr 150px 76px; padding:{{ rowPad }}; border-top:1px solid var(--border); align-items:center; gap:16px; font-size:13px;">
+              <span style="display:flex; align-items:center; gap:9px;"><span style="width:10px; height:10px; border-radius:50%; flex:none; background:{{ b.dot }};"></span><span class="kl-link" onClick="{{ b.onOpen }}">{{ b.locLabel }}</span></span>
+              <span class="kl-link" data-label="Part number" style="font-family:ui-monospace,monospace;">{{ b.sku }}</span>
+              <span data-label="Description" style="color:var(--text-2);">{{ b.desc }}</span>
+              <span data-label="Status"><span style="font-size:12px; font-weight:700; color:{{ b.pillFg }}; background:{{ b.pillBg }}; padding:2px 11px; border-radius:999px;">{{ b.statusLabel }}</span></span>
+              <span data-label="Demand" style="font-weight:600; color:var(--text-2);">New</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== NEW DEMAND ===== -->
+      <sc-if value="{{ isDemand }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;">
+          <div>
+            <sc-if value="{{ demandScoped }}" hint-placeholder-val="{{ true }}"><div style="font-size:13px; color:var(--text-3); margin-bottom:8px;"><span class="kl-link" onClick="{{ goSiteDemand }}">{{ siteName }}</span> / <span style="color:var(--text-2);">{{ demandAreaName }}</span></div></sc-if>
+            <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0; color:var(--text);">New demand</h1>
+            <div style="font-size:14px; color:var(--text-2); margin-top:4px;">{{ demandSubtitle }}</div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <span class="kl-btn" style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); padding:9px 16px; border-radius:9px; cursor:pointer;">Download</span>
+            <span class="kl-btn" style="font-size:13px; font-weight:600; color:var(--accent-ink); background:var(--accent); padding:9px 16px; border-radius:9px; cursor:pointer;">Download &amp; set in progress</span>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:32px;">
+          <sc-for list="{{ demandAreas }}" as="area" hint-placeholder-count="3">
+            <div>
+              <div style="margin-bottom:14px;">
+                <span onClick="{{ area.onOpen }}" class="kl-link" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; letter-spacing:-.02em; color:var(--text);">{{ area.name }}</span>
+              </div>
+              <div style="display:flex; flex-direction:column; gap:16px;">
+                <sc-for list="{{ area.groups }}" as="g" hint-placeholder-count="2">
+                  <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden;">
+                    <div style="padding:16px 22px; border-bottom:1px solid var(--border);">
+                      <span onClick="{{ g.onOpen }}" class="kl-link" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:var(--text);">{{ g.panel }}</span>
+                    </div>
+                    <div class="kl-thead" style="display:grid; grid-template-columns:64px 132px 1fr 112px; padding:10px 22px; font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-3); gap:16px;"><span>Location</span><span>Part number</span><span>Description</span><span>Demand</span></div>
+                    <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
+                      <div class="kl-trow" style="display:grid; grid-template-columns:64px 132px 1fr 112px; padding:11px 22px; border-top:1px solid var(--border); align-items:center; gap:16px; font-size:13px;">
+                        <span style="display:flex; align-items:center; gap:8px;"><span style="width:9px; height:9px; border-radius:50%; flex:none; background:{{ r.dot }};"></span><span class="kl-link" onClick="{{ r.onOpen }}">{{ r.loc }}</span></span>
+                        <span class="kl-link" data-label="Part number" style="font-family:ui-monospace,monospace;">{{ r.sku }}</span>
+                        <span data-label="Description" style="color:var(--text-2);">{{ r.desc }}</span>
+                        <span data-label="Demand" style="font-size:12px; font-weight:700; color:#B47100; background:rgba(245,166,35,.16); padding:2px 10px; border-radius:999px; justify-self:start;">New</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ===== PART USAGES ===== -->
+      <sc-if value="{{ isUsages }}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:20px;">
+          <div>
+            <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:28px; letter-spacing:-.03em; margin:0; color:var(--text);">Part usages</h1>
+            <div style="font-size:13px; color:var(--text-3); margin-top:4px;">Jul 1, 2025 – Jun 30, 2026</div>
+          </div>
+          <span class="kl-btn" style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); padding:9px 16px; border-radius:9px; cursor:pointer;">Download</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:10px 14px; max-width:360px; margin-bottom:18px;">
+          <span style="color:var(--text-3);">⌕</span><input placeholder="Search part number…" style="border:none; outline:none; background:transparent; font-family:'Hanken Grotesk',sans-serif; font-size:14px; color:var(--text); width:100%;">
+        </div>
+        <div class="kl-scroll" style="overflow-x:auto; background:var(--surface); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow);">
+          <div>
+            <div style="display:grid; grid-template-columns:112px 104px repeat(12, 1fr) 48px 54px; padding:12px 18px; background:var(--surface-2); font-size:10px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; color:var(--text-3); gap:6px; position:sticky; top:0;">
+              <span>Part number</span>
+              <span>Usage</span>
+              <sc-for list="{{ usageMonths }}" as="m" hint-placeholder-count="12"><span style="text-align:right;">{{ m }}</span></sc-for>
+              <span style="text-align:right;">Total</span><span style="text-align:right;">Avg/mo</span>
+            </div>
+            <sc-for list="{{ usageRows }}" as="row" hint-placeholder-count="12">
+              <div style="display:grid; grid-template-columns:112px 104px repeat(12, 1fr) 48px 54px; padding:{{ usagePad }}; border-top:1px solid var(--border); align-items:center; gap:6px; font-size:11px;">
+                <span class="kl-link" style="font-family:ui-monospace,monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">{{ row.sku }}</span>
+                <span style="height:30px; display:flex; align-items:flex-end; gap:1.5px; border-bottom:1px dashed var(--border-strong);"><sc-for list="{{ row.months }}" as="bar" hint-placeholder-count="12"><span title="{{ bar.title }}" style="flex:1; height:{{ bar.barH }}; background:var(--accent); border-radius:1px 1px 0 0; display:block;"></span></sc-for></span>
+                <sc-for list="{{ row.months }}" as="cell" hint-placeholder-count="12"><span style="text-align:right; font-family:ui-monospace,monospace; color:{{ cell.color }};">{{ cell.v }}</span></sc-for>
+                <span style="text-align:right; font-family:ui-monospace,monospace; font-weight:700; color:var(--text);">{{ row.total }}</span>
+                <span style="text-align:right; font-family:ui-monospace,monospace; color:var(--text-2);">{{ row.avg }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div class="kl-pager" style="display:flex; gap:6px; margin-top:20px; align-items:center;">
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); padding:0 13px; height:34px; border-radius:9px; display:flex; align-items:center; cursor:pointer;">« First</span>
+          <span style="font-size:13px; font-weight:700; color:var(--accent-ink); background:var(--accent); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center;">1</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer;">2</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); width:34px; height:34px; border-radius:9px; display:flex; align-items:center; justify-content:center; cursor:pointer;">3</span>
+          <span style="font-size:13px; color:var(--text-3); padding:0 4px;">…</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); padding:0 13px; height:34px; border-radius:9px; display:flex; align-items:center; cursor:pointer;">Next ›</span>
+        </div>
+      </div>
+      </sc-if>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;defaultTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;light&quot;,&quot;dark&quot;],&quot;default&quot;:&quot;light&quot;,&quot;tsType&quot;:&quot;'light'|'dark'&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#14776B&quot;,&quot;options&quot;:[&quot;#14776B&quot;,&quot;#2F5FD0&quot;,&quot;#4C6FA5&quot;,&quot;#8A3FBF&quot;,&quot;#E8442E&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;comfortable&quot;,&quot;compact&quot;],&quot;default&quot;:&quot;comfortable&quot;,&quot;tsType&quot;:&quot;'comfortable'|'compact'&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+class Component extends DCLogic {
+  state = {
+    theme: (typeof localStorage !== 'undefined' && localStorage.getItem('kl-theme')) || this.props.defaultTheme || 'light',
+    screen: 'panel',
+    view: 'grid',
+    zone: 'Z1-B',
+    zoneArea: 'Main Stores',
+    statusFilter: 'overview',
+    demandArea: null,
+    binLoc: 'A4',
+    binZone: 'Z1-A',
+    navOpen: false
+  };
+
+  palettes = {
+    light: {
+      '--bg':'#F6F2EC','--surface':'#FFFFFF','--surface-2':'#FBF8F3','--border':'#EAE3D8',
+      '--border-strong':'#DDD3C4','--text':'#211C16','--text-2':'#6E6459','--text-3':'#9A8F81',
+      '--accent-2':'#F5A623','--accent-ink':'#FFFFFF','--nav-bg':'rgba(246,242,236,0.9)',
+      '--shadow':'0 1px 2px rgba(33,28,22,.05), 0 14px 34px -14px rgba(33,28,22,.16)',
+      '--shadow-lg':'0 40px 90px -34px rgba(33,28,22,.4)'
+    },
+    dark: {
+      '--bg':'#17130E','--surface':'#211C15','--surface-2':'#1C1710','--border':'#312A20',
+      '--border-strong':'#3E3527','--text':'#F6F2EC','--text-2':'#B0A594','--text-3':'#7E7362',
+      '--accent-2':'#F5A623','--accent-ink':'#221206','--nav-bg':'rgba(23,19,14,0.9)',
+      '--shadow':'0 1px 2px rgba(0,0,0,.4), 0 14px 34px -14px rgba(0,0,0,.6)',
+      '--shadow-lg':'0 40px 90px -34px rgba(0,0,0,.75)'
+    }
+  };
+  accents = { light:'#E8442E', dark:'#F0503B' };
+  statusColors = { empty:'#E5372A', requires:'#F5A623', hasstock:null };
+
+  pool = [
+    ['SKU-10482','Flat washer M8 A2'],['HX-M8-40','Hex bolt M8x40 zinc'],['NUT-M8-NY','Nyloc nut M8'],
+    ['SCR-PH4-20','Pan screw PH #4x20'],['ORING-214','O-ring 214 nitrile'],['CLIP-R12','Retaining clip R12'],
+    ['GRML-10','Grommet 10mm rubber'],['BUSH-BR12','Bronze bushing 12mm'],['MAG-D20','Magnet disc 20mm'],
+    ['CONN-4P','Connector 4-pin sealed'],['BRG-6204','Ball bearing 6204 2RS'],['SPR-C08','Compression spring C08'],
+    ['TAPE-PK48','Packing tape 48mm'],['LBL-TH46','Thermal label 4x6'],['GLV-NIT-L','Nitrile glove L box100'],
+    ['PVC-CPL25','PVC coupling 25mm'],['CBL-3C15','Cable 3-core 1.5mm'],['FLT-9000','Filter cartridge 9000'],
+    ['HNG-90SS','Hinge 90mm stainless'],['STD-4040','Alu profile 40x40'],['WSH-M6','Flat washer M6 A2'],
+    ['NUT-M6-NY','Nyloc nut M6'],['SCR-M5-16','Cap screw M5x16'],['RIV-40','Blind rivet 4.0mm'],
+    ['SEAL-V38','V-seal 38mm'],['TERM-R6','Ring terminal 6mm'],['FUSE-5A','Blade fuse 5A'],
+    ['LED-IND24','Indicator LED 24V'],['SWT-TG3','Toggle switch 3-way'],['HOSE-12','Hose 12mm braided'],
+    ['CLMP-16','Hose clamp 16mm'],['GSKT-A2','Gasket sheet A2'],['ADH-290','Adhesive 290ml'],
+    ['BOLT-M10','Hex bolt M10x50'],['ANCH-8','Wall anchor 8mm'],['STRP-200','Cable tie 200mm'],
+    ['CAP-EM12','End cap 12mm'],['ROLL-PIN4','Roll pin 4mm'],['KEY-5x5','Parallel key 5x5'],
+    ['SHIM-05','Shim 0.5mm'],['SPCR-10','Spacer 10mm alu'],['DOWEL-6','Dowel pin 6mm'],
+    ['LOCK-M8','Lock washer M8'],['STUD-M8','Threaded stud M8'],['PLUG-BR','Blanking plug brass'],['FERR-25','Cable ferrule 2.5']
+  ];
+
+  setRoot = (el) => { this.root = el; if (el) this.applyTheme(this.state.theme); };
+  applyTheme(theme) {
+    if (!this.root) return;
+    const p = this.palettes[theme];
+    for (const k in p) this.root.style.setProperty(k, p[k]);
+    this.root.style.setProperty('--accent', this.props.accent || this.accents[theme]);
+  }
+  toggleTheme = () => {
+    const theme = this.state.theme === 'light' ? 'dark' : 'light';
+    try { localStorage.setItem('kl-theme', theme); } catch (e) {}
+    this.setState({ theme }, () => this.applyTheme(theme));
+  };
+  componentDidUpdate(prev) {
+    if (prev.accent !== this.props.accent || prev.defaultTheme !== this.props.defaultTheme) this.applyTheme(this.state.theme);
+  }
+
+  go = (screen) => () => this.setState({ screen, navOpen:false });
+  openDemand = (area) => () => this.setState({ screen:'demand', demandArea: area || null, navOpen:false });
+  openBin = (loc, zone) => () => this.setState({ screen:'bin', binLoc:loc, binZone: zone || this.state.zone, navOpen:false });
+  openZone = (code, area) => () => this.setState({ screen:'panel', zone:code, zoneArea: area || this.state.zoneArea, navOpen:false });
+  setView = (v) => () => this.setState({ view:v });
+  setViewSelect = (e) => this.setState({ view: e.target.value });
+  openFilter = (f) => () => this.setState({ screen:'filter', statusFilter:f, navOpen:false });
+  toggleNav = () => this.setState(s => ({ navOpen: !s.navOpen }));
+  closeNav = () => this.setState({ navOpen:false });
+
+  buildStatusBins(filter) {
+    const R = '#E5372A';
+    const bins = [];
+    this.buildDemand().forEach(area => area.groups.forEach(g => g.rows.forEach(r => {
+      const st = r.dot === R ? 'empty' : 'requires';
+      bins.push({
+        area:area.name, panel:g.panel, loc:r.loc, sku:r.sku, desc:r.desc, st,
+        dot:r.dot, locLabel: g.panel + ' · ' + r.loc, onOpen:r.onOpen,
+        statusLabel: st === 'empty' ? 'Empty' : 'Requires stock',
+        pillBg: st === 'empty' ? 'rgba(229,55,42,.12)' : 'rgba(245,166,35,.16)',
+        pillFg: st === 'empty' ? '#C22D1C' : '#B47100'
+      });
+    })));
+    if (filter === 'empty') return bins.filter(b => b.st === 'empty');
+    if (filter === 'requires') return bins.filter(b => b.st === 'requires');
+    return bins;
+  }
+
+  dot(color) {
+    if (color) return { bg:color, border:'0' };
+    return { bg:'var(--surface)', border:'1.5px solid var(--border-strong)' };
+  }
+
+  zoneBins() {
+    const layout = [['A',10],['B',10],['C',10],['D',10],['E',6]];
+    const overrides = { 'A2':'requires', 'B1':'empty', 'B2':'empty', 'C4':'requires', 'D7':'empty' };
+    let i = 0; const bins = [];
+    for (const [label, n] of layout) {
+      for (let c = 1; c <= 10; c++) {
+        if (c > n) { bins.push({ label, c, filled:false }); continue; }
+        const loc = label + c;
+        const [sku, desc] = this.pool[i % this.pool.length]; i++;
+        const st = overrides[loc] || 'hasstock';
+        const qty = st === 'empty' ? 0 : st === 'requires' ? 100 : 200;
+        bins.push({ label, c, filled:true, loc, sku, desc, st, qty });
+      }
+    }
+    return bins;
+  }
+
+  buildGrid() {
+    const bins = this.zoneBins();
+    return ['A','B','C','D','E'].map(label => ({
+      label,
+      cells: bins.filter(b => b.label === label).sort((a,b)=>a.c-b.c).map(b => {
+        if (!b.filled) return { filled:false, bg:'var(--surface-2)', cellBorder:'1px solid var(--border)', leftBorder:'1px solid var(--border)', cursor:'default' };
+        const color = this.statusColors[b.st];
+        return {
+          filled:true, loc:b.loc, sku:b.sku, desc:b.desc, qtyLabel: b.qty + ' / 100',
+          showDot: b.st !== 'hasstock', dot: color || 'transparent',
+          bg:'var(--surface)', cursor:'pointer',
+          locColor: 'var(--text-3)',
+          cellBorder: '1px solid var(--border)',
+          leftBorder: color ? ('3px solid ' + color) : '1px solid var(--border)',
+          onOpen: this.openBin(b.loc, this.state.zone)
+        };
+      })
+    }));
+  }
+
+  buildBinList() {
+    const v = this.state.view;
+    let bins = this.zoneBins().filter(b => b.filled);
+    if (v === 'empty') bins = bins.filter(b => b.st === 'empty');
+    else if (v === 'requires') bins = bins.filter(b => b.st === 'requires');
+    else if (v === 'overview') bins = bins.filter(b => b.st !== 'hasstock');
+    return bins.map(b => {
+      const color = this.statusColors[b.st];
+      const attn = b.st !== 'hasstock';
+      return {
+        loc:b.loc, sku:b.sku, desc:b.desc,
+        dot: color || 'transparent',
+        demandLabel: attn ? 'New' : 'Fulfilled',
+        demandColor: attn ? 'var(--text)' : 'var(--text-3)',
+        onOpen: this.openBin(b.loc, this.state.zone)
+      };
+    });
+  }
+
+  buildBinHistory() {
+    const R='#E5372A', A='#F5A623';
+    const rows = [
+      { ts:'30/06/2026 15:53', from:null, to:A, text:'Quantity changed 200 to 100', user:'C. Rivera' },
+      { ts:'29/06/2026 18:28', from:R, to:null, text:'Quantity changed 0 to 200', user:'C. Rivera' },
+      { ts:'23/06/2026 20:27', from:null, to:A, text:'Quantity changed 200 to 100', user:'C. Rivera' },
+      { ts:'23/06/2026 20:26', from:A, to:null, text:'Quantity changed 100 to 200', user:'C. Rivera' },
+      { ts:'23/06/2026 20:26', from:null, to:A, text:'Quantity changed 200 to 100', user:'C. Rivera' }
+    ];
+    return rows.map(r => { const f=this.dot(r.from), t=this.dot(r.to); return { ...r, fromBg:f.bg, fromBorder:f.border, toBg:t.bg, toBorder:t.border }; });
+  }
+
+  buildHistory() {
+    const R='#E5372A', A='#F5A623';
+    const raw = [
+      ['01/07/2026 11:14','Main Stores / Z1-B / B1',null,R,'Quantity changed 200 to 0'],
+      ['01/07/2026 11:14','Main Stores / Z1-B / A2',null,A,'Quantity changed 200 to 100'],
+      ['01/07/2026 11:14','Main Stores / Z1-B / B2',null,R,'Quantity changed 200 to 0'],
+      ['01/07/2026 10:47','Main Stores / Z1-B / A1',A,null,'Quantity changed 100 to 200'],
+      ['01/07/2026 10:47','Main Stores / Z1-B / A2',A,null,'Quantity changed 100 to 200'],
+      ['01/07/2026 10:47','Main Stores / Z1-B / A3',R,null,'Quantity changed 0 to 200'],
+      ['scan','Main Stores / Z1-B','','','Panel scanned'],
+      ['01/07/2026 10:46','Main Stores / Z1-B / A3',null,R,'Status changed Has stock to Empty'],
+      ['01/07/2026 10:02','Main Stores / Z1-B / B3',A,null,'Quantity changed 100 to 200'],
+      ['01/07/2026 10:01','Main Stores / Z1-B / A3',R,null,'Quantity changed 0 to 200'],
+      ['01/07/2026 10:01','Main Stores / Z1-B / A3',A,R,'Quantity changed 100 to 0'],
+      ['01/07/2026 10:01','Main Stores / Z1-B / B2',A,R,'Quantity changed 100 to 0'],
+      ['scan','Main Stores / Z1-B','','','Panel scanned'],
+      ['30/06/2026 15:53','Main Stores / Z1-A / D8',A,R,'Quantity changed 100 to 0'],
+      ['30/06/2026 15:53','Main Stores / Z1-A / A6',null,A,'Quantity changed 200 to 100']
+    ];
+    return raw.map(row => {
+      const [ts, loc, from, to, text] = row;
+      const isScan = ts === 'scan';
+      const f=this.dot(from), t=this.dot(to);
+      return {
+        ts: isScan ? loc.length ? '01/07/2026' : ts : ts, loc, text, user:'C. Rivera',
+        isScan, isChange: !isScan,
+        onOpen: this.openBin(loc.split(' / ').pop(), 'Z1-B'),
+        fromBg:f.bg, fromBorder:f.border, toBg:t.bg, toBorder:t.border
+      };
+    });
+  }
+
+  buildDemand() {
+    const R='#E5372A', A='#F5A623';
+    const data = [
+      ['Main Stores', [
+        ['Z1-A', [['A4','SKU-10482','Flat washer M8 A2',A],['A6','CLIP-R12','Retaining clip R12',A],['D8','BRG-6204','Ball bearing 6204 2RS',R]]],
+        ['Z1-B', [['A2','SKU-10482','Flat washer M8 A2',A],['B1','BRG-6204','Ball bearing 6204 2RS',R],['B2','SPR-C08','Compression spring C08',R]]],
+        ['Z2-B', [['A1','GSKT-A2','Gasket sheet A2',A],['D4','SEAL-V38','V-seal 38mm',R],['D6','FLT-9000','Filter cartridge 9000',R]]]
+      ]],
+      ['Receiving Dock', [
+        ['RC-1', [['B1','SCR-M5-16','Cap screw M5x16',A],['B3','ANCH-8','Wall anchor 8mm',A]]],
+        ['RC-2', [['A1','STRP-200','Cable tie 200mm',A]]]
+      ]],
+      ['Cold Store', [
+        ['CS-2', [['A2','SEAL-V38','V-seal 38mm',R],['D3','FLT-9000','Filter cartridge 9000',A]]]
+      ]]
+    ];
+    return data.map(([name, groups]) => {
+      const mapped = groups.map(([panel, rows]) => ({
+        panel, onOpen: this.openZone(panel, name),
+        rows: rows.map(([loc, sku, desc, color]) => ({ loc, sku, desc, dot:color, onOpen:this.openBin(loc, panel) }))
+      }));
+      return { name, onOpen: this.openZone(mapped[0].panel, name), groups: mapped };
+    });
+  }
+
+  buildUsages() {
+    const skus = ['SKU-10482','HX-M8-40','NUT-M8-NY','BRG-6204','ORING-214','CLIP-R12','GLV-NIT-L','LBL-TH46',
+      'PVC-CPL25','CBL-3C15','FLT-9000','SPR-C08','TAPE-PK48','SCR-PH4-20','CONN-4P','FUSE-5A'];
+    const raw = skus.map((sku, idx) => {
+      const vals = []; let total = 0;
+      for (let m = 0; m < 12; m++) {
+        const base = (idx * 7 + m * 13 + m * m) % 46;
+        const v = base < 12 ? 0 : Math.round(base * 4);
+        total += v; vals.push(v);
+      }
+      return { sku, vals, total, avg: Math.round(total / 12) };
+    });
+    const max = Math.max(1, ...raw.flatMap(r => r.vals));
+    return raw.map(r => ({
+      sku: r.sku, total: r.total, avg: r.avg,
+      months: r.vals.map(v => ({
+        v: v === 0 ? '–' : String(v),
+        color: v === 0 ? 'var(--text-3)' : 'var(--text)',
+        hasVal: v > 0,
+        barH: (v > 0 ? Math.max(3, Math.round(v / max * 22)) : 0) + 'px',
+        title: v > 0 ? String(v) + ' used' : 'No usage'
+      }))
+    }));
+  }
+
+  navStyle(name) {
+    const active = this.state.screen === name;
+    return {
+      bg: active ? 'var(--surface-2)' : 'transparent',
+      fg: active ? 'var(--accent)' : 'var(--text-2)',
+      dot: active ? '1' : '0.4'
+    };
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    const mkPanel = (area, code, empty, requires) => {
+      const active = code === this.state.zone && s === 'panel';
+      return { code, empty, requires, onOpen:this.openZone(code, area),
+        bg: active ? 'var(--surface-2)' : 'transparent',
+        fg: active ? 'var(--accent)' : 'var(--text)' };
+    };
+    const areas = [
+      { name:'Main Stores', panels:[['Z1-A',1,2],['Z1-B',2,1],['Z2-A',0,0],['Z2-B',2,1],['Z3-A',2,1],['Z3-B',0,0]] },
+      { name:'Receiving Dock', panels:[['RC-1',0,5],['RC-2',0,2],['RC-3',0,1]] },
+      { name:'Cold Store', panels:[['CS-1',0,1],['CS-2',2,1],['CS-3',0,1]] }
+    ].map(a => {
+      const active = s === 'demand' && this.state.demandArea === a.name;
+      return { name:a.name, onOpen:this.openDemand(a.name),
+        bg: active ? 'var(--surface-2)' : 'transparent',
+        fg: active ? 'var(--accent)' : 'var(--text)',
+        panels:a.panels.map(p => mkPanel(a.name, p[0], p[1], p[2])) };
+    });
+
+    const filter = this.state.statusFilter;
+    const allAttn = this.buildStatusBins('overview');
+    const emptyCount = allAttn.filter(b => b.st === 'empty').length;
+    const requiresCount = allAttn.filter(b => b.st === 'requires').length;
+    const mkStatus = (key, label, dot, count, onClick, neutral) => {
+      const active = (key === 'demand') ? s === 'demand' : (s === 'filter' && filter === key);
+      return { label, dot, count, onClick, neutral: !!neutral, colored: !neutral,
+        dotOpacity: active ? 1 : 0.4,
+        bg: active ? 'var(--surface-2)' : 'transparent',
+        fg: active ? 'var(--accent)' : 'var(--text-2)',
+        chipBg: 'var(--border)',
+        chipFg: active ? 'var(--accent)' : 'var(--text-2)' };
+    };
+    const statusMenu = [
+      mkStatus('demand', 'New demand', 'var(--text-2)', allAttn.length, this.openDemand(), true),
+      mkStatus('overview', 'Overview', 'var(--text-2)', allAttn.length, this.openFilter('overview'), true),
+      mkStatus('empty', 'Empty', '#E5372A', emptyCount, this.openFilter('empty'), false),
+      mkStatus('requires', 'Requires stock', '#F5A623', requiresCount, this.openFilter('requires'), false)
+    ];
+    const filterTitle = filter === 'empty' ? 'Empty bins' : filter === 'requires' ? 'Requires stock' : 'Overview';
+    const filterBins = this.buildStatusBins(filter);
+
+    const sites = [
+      { name:'Main Warehouse', requires:17, empty:9, onOpen:this.openDemand() },
+      { name:'North Distribution', requires:23, empty:14, onOpen:this.openDemand() },
+      { name:'Retail Backstore', requires:5, empty:2, onOpen:this.openDemand() }
+    ];
+
+    const np=this.navStyle('panel'), nh=this.navStyle('history'), nd=this.navStyle('demand'), nu=this.navStyle('usages');
+    const demandScoped = !!this.state.demandArea;
+    let demandAreas = this.buildDemand();
+    if (demandScoped) demandAreas = demandAreas.filter(a => a.name === this.state.demandArea);
+    const demandCount = demandAreas.reduce((a,ar)=>a+ar.groups.reduce((b,g)=>b+g.rows.length,0),0);
+
+    const view = this.state.view;
+    const viewTabs = [['grid','Grid'],['overview','Overview'],['empty','Empty'],['requires','Requires stock'],['all','All']]
+      .map(([key, label]) => { const a = view === key; return { key, label, onClick:this.setView(key),
+        bg: a ? 'var(--accent)' : 'transparent', fg: a ? 'var(--accent-ink)' : 'var(--text-2)' }; });
+
+    return {
+      setRoot:this.setRoot, toggleTheme:this.toggleTheme,
+      toggleNav:this.toggleNav, closeNav:this.closeNav,
+      navOpenStr: this.state.navOpen ? 'true' : 'false',
+      themeIcon: this.state.theme === 'light' ? '☾' : '☀',
+      goSites:this.go('sites'), goPanel:this.go('panel'), goHistory:this.go('history'),
+      goDemand:this.go('demand'), goUsages:this.go('usages'),
+      goSiteDemand:this.openDemand(), goAreaDemand:this.openDemand(this.state.zoneArea),
+      demandScoped, demandAreaName:this.state.demandArea,
+      isSites:s==='sites', isPanel:s==='panel', isBin:s==='bin', isHistory:s==='history', isDemand:s==='demand', isUsages:s==='usages', isFilter:s==='filter',
+      filterTitle, filterBins, filterCount: filterBins.length,
+      showSidebar: s !== 'sites',
+      siteName:'Main Warehouse',
+      topSitesBg: s==='sites' ? 'var(--surface-2)' : 'transparent',
+      topSitesFg: s==='sites' ? 'var(--text)' : 'var(--text-2)',
+      navPanelBg:np.bg, navPanelFg:np.fg, navPanelDot:np.dot,
+      navHistoryBg:nh.bg, navHistoryFg:nh.fg, navHistoryDot:nh.dot,
+      navDemandBg:nd.bg, navDemandFg:nd.fg, navDemandDot:nd.dot,
+      navUsagesBg:nu.bg, navUsagesFg:nu.fg, navUsagesDot:nu.dot,
+      statusMenu, areas, sites,
+      zoneCode:this.state.zone, zoneArea:this.state.zoneArea,
+      gridCols:[1,2,3,4,5,6,7,8,9,10],
+      grid:this.buildGrid(),
+      viewTabs, isGridView: view==='grid', isListView: view!=='grid',
+      curView: view, setViewSelect: this.setViewSelect,
+      binList:this.buildBinList(),
+      binLoc:this.state.binLoc, binZone:this.state.binZone,
+      binHistory:this.buildBinHistory(),
+      historyRows:this.buildHistory(),
+      demandAreas, demandCount, demandAreaCount: demandAreas.length,
+      demandSubtitle: demandScoped
+        ? (demandCount + ' bins need action in ' + this.state.demandArea)
+        : (demandCount + ' bins need action across ' + demandAreas.length + ' areas'),
+      usageMonths:['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'],
+      usageRows:this.buildUsages(),
+      rowPad: (this.props.density === 'compact') ? '8px 24px' : '13px 24px',
+      usagePad: (this.props.density === 'compact') ? '8px 18px' : '12px 18px'
+    };
+  }
+}
+</script>
+</body>
+</html>
