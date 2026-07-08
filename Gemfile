@@ -4,7 +4,6 @@ ruby '3.4.9'
 
 gem 'bigdecimal'
 gem 'github-pages'
-gem 's3_website'
 
 group :jekyll_plugins do
   gem 'jekyll-feed'
