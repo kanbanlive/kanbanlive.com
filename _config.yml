@@ -17,7 +17,7 @@ description: 'Kanban Live is a cloud-based, inventory management system which ma
 baseurl: ''
 url: http://kanbanlive.com
 author: kanbanlive
-logo: "assets/img/logo.png"
+logo: "/images/logo.png"
 exclude:
 - README.md
 - CNAME
@@ -39,7 +39,6 @@ kramdown:
   syntax_highlighter: rouge
 permalink: /blog/:year/:month/:title/
 plugins:
-  - jekyll-assets
   - jekyll-feed
   - jekyll-paginate-v2
   - jekyll-redirect-from
@@ -62,15 +61,3 @@ compress_html:
   clippings: all
   ignore:
     envs: development
-
-# Jekyll Assets
-# - https://jekyll.github.io/jekyll-assets/
-assets:
-  compression: true
-  gzip: true
-  sources:
-    - _assets/css
-    - _assets/img
-    - _assets/js
-  autoprefixer:
-    browsers: ["last 2 versions","> 5%","IE 9"]

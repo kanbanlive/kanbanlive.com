@@ -1,14 +1,12 @@
 source 'https://rubygems.org'
 
-ruby '2.7.2'
+ruby '3.4.9'
 
-gem 'autoprefixer-rails'
+gem 'bigdecimal'
 gem 'github-pages'
 gem 's3_website'
-gem 'uglifier'
 
 group :jekyll_plugins do
-  gem 'jekyll-assets'
   gem 'jekyll-feed'
   gem 'jekyll-paginate-v2'
   gem 'jekyll-redirect-from'

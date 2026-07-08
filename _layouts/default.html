@@ -13,10 +13,10 @@
     <![endif]-->
     {% feed_meta %}
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
-    <link rel="stylesheet" href="{% asset_path core.min.css %}" />
+    <link rel="stylesheet" href="/assets/css/core.min.css" />
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <link rel="stylesheet" href="assets/css/lt-ie9.min.css">
+      <link rel="stylesheet" href="/assets/css/lt-ie9.min.css">
     <![endif]-->
     <script src="https://cdn.usefathom.com/script.js" data-site="RTHDLVXZ" defer></script>
     <meta content='width=device-width, initial-scale=1, minimum-scale=1' name='viewport'>
@@ -26,7 +26,7 @@
 <body class="{{ page.body-class }}">
     {% include layout/header.html %} {{ content }} {% include layout/footer.html %}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="{% asset_path general.min.js %}"></script>
-    <script src="{% asset_path plugins/jquery.meanmenu.2.0.min.js %}"></script>
+    <script src="/assets/js/general.min.js"></script>
+    <script src="/assets/js/plugins/jquery.meanmenu.2.0.min.js"></script>
 </body>
 </html>
