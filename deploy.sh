@@ -4,8 +4,27 @@ set -euo pipefail
 BUCKET="s3://kanbanlive.com"
 CLOUDFRONT_DISTRIBUTION_ID="${CLOUDFRONT_DISTRIBUTION_ID:-}"
 
+echo "Checking prerequisites"
+
+for cmd in bundle aws; do
+  if ! command -v "$cmd" >/dev/null 2>&1; then
+    echo "Error: required command '$cmd' is not installed or not on PATH" >&2
+    exit 1
+  fi
+done
+
+if ! bundle check >/dev/null 2>&1; then
+  echo "Error: bundled gems are not installed; run 'bundle install' first" >&2
+  exit 1
+fi
+
+if ! aws sts get-caller-identity >/dev/null 2>&1; then
+  echo "Error: AWS credentials are not configured or have expired" >&2
+  exit 1
+fi
+
 echo "Building blog"
-jekyll build
+bundle exec jekyll build
 
 echo "Deploying static assets to s3 (long cache)"
 aws s3 sync ./_site "$BUCKET" \
