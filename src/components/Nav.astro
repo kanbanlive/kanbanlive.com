@@ -31,6 +31,8 @@ const isActive = (href: string) => strip(href) === current;
           <a href={link.href} style="text-decoration:none; color:var(--text-2); font-size:15px; font-weight:500;">{link.label}</a>
         )
       ))}
+      <!-- Login lives in the top-bar on desktop; also surface it in the mobile dropdown -->
+      <a href={LOGIN_URL} class="kl-navlogin" style="text-decoration:none; color:var(--text); font-size:15px; font-weight:600;">Login</a>
     </div>
 
     <div style="margin-left:auto; display:flex; align-items:center; gap:14px;">

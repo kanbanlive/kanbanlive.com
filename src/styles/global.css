@@ -109,6 +109,9 @@ img { max-width: 100%; }
 /* ---- Mobile nav burger (hidden on desktop) ---- */
 .kl-burger { display: none; }
 
+/* Login link inside the dropdown — only shown on mobile (see ≤860px block). */
+.kl-navlogin { display: none; }
+
 /* =========================================================
    Responsive grid collapses — class hooks carried from the
    reference files. Each override matches its inline grid.
@@ -142,6 +145,7 @@ img { max-width: 100%; }
   nav .kl-navlinks[data-open="true"] { display: flex !important; }
   .kl-burger { display: flex !important; }
   .kl-loginlink { display: none !important; }
+  .kl-navlogin { display: block !important; }
   .kl-price { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 760px) {
