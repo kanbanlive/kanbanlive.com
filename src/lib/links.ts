@@ -7,4 +7,3 @@ export const SIGNUP_URL = `${APP_URL}/users/sign_up`;
 // CTAs then hand off to app sign-up.
 export const TRIAL_URL = '/pricing/';
 export const CONTACT_EMAIL = 'hello@kanbanlive.com';
-export const CONTACT_PHONE = '+44 (0)1962 853322';
