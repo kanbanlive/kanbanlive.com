@@ -1,5 +1,7 @@
 # kanbanlive.com
 
+[![Deploy](https://github.com/kanbanlive/kanbanlive.com/actions/workflows/deploy.yml/badge.svg)](https://github.com/kanbanlive/kanbanlive.com/actions/workflows/deploy.yml)
+
 The Kanban Live marketing site, built with [Astro](https://astro.build) (v7).
 
 Static six-page marketing site — Home, Tour, Case Studies, Pricing, About,
