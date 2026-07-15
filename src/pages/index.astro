@@ -1,0 +1,175 @@
+---
+import Site from '../layouts/Site.astro';
+---
+<Site
+  isHome={true}
+  title="Kanban Live — Live inventory control for every industry"
+  description="From aerospace bins to hospital shelves, Kanban Live turns every location into a live signal. Scan stock in and out, track batches and expiry, and orders draft themselves the moment stock runs low."
+>
+  <!-- ============ HERO ============ -->
+  <header id="top" style="max-width:1200px; margin:0 auto; padding:40px 32px 40px;">
+    <div style="max-width:820px;">
+      <div style="display:inline-flex; align-items:center; gap:9px; padding:6px 13px 6px 10px; border:1px solid var(--border-strong); border-radius:999px; background:var(--surface); font-size:13px; font-weight:600; color:var(--text-2); letter-spacing:.01em;">
+        <span style="width:7px; height:7px; border-radius:50%; background:#35A46B; box-shadow:0 0 0 3px rgba(53,164,107,.18);"></span>
+        Live inventory control for every industry
+      </div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(40px,6vw,68px); line-height:1.03; letter-spacing:-.03em; margin:22px 0 0; color:var(--text); text-wrap:balance;">Flexible stock management for a <span style="color:var(--accent);">leaner</span> business</h1>
+      <p style="font-size:clamp(17px,2vw,20px); line-height:1.55; color:var(--text-2); margin:22px 0 0; max-width:640px;">From aerospace bins to hospital shelves, Kanban Live turns every location into a live signal. Scan stock in and out, track batches and expiry, and orders draft themselves the moment stock runs low — exactly what you need, exactly when.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:32px;">
+        <a href="#pricing" class="kl-lift-2" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); font-size:16px; font-weight:600; padding:14px 24px; border-radius:12px; box-shadow:0 10px 24px -8px var(--accent);">Start free trial</a>
+        <a href="#product" class="kl-lift-2" style="text-decoration:none; background:var(--surface); color:var(--text); font-size:16px; font-weight:600; padding:14px 24px; border-radius:12px; border:1px solid var(--border-strong);">Take the tour</a>
+      </div>
+      <p style="margin-top:20px; font-size:14px; color:var(--text-2);">No card required · Works on iPad, iPhone &amp; the web, even offline · From the shop floor to the ward</p>
+    </div>
+
+    <!-- PRODUCT MOCK: real app screenshot (grid view) -->
+    <div id="product" class="kl-product" style="margin-top:52px; border-radius:18px; border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; background:var(--surface);">
+      <div style="display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); background:var(--surface-2);">
+        <span style="width:11px; height:11px; border-radius:50%; background:#E5372A; opacity:.85;"></span><span style="width:11px; height:11px; border-radius:50%; background:#F5A623; opacity:.85;"></span><span style="width:11px; height:11px; border-radius:50%; background:#35A46B; opacity:.85;"></span>
+        <span style="margin-left:10px; font-size:12px; font-weight:600; color:var(--text-3); font-family:ui-monospace,'SF Mono',Menlo,monospace;">app.kanbanlive.com</span>
+      </div>
+      <img src="/screenshots/app-grid.png" width="907" height="540" alt="Kanban Live app — panel grid view of a stores location, each bin showing its product, quantity and scan state" style="display:block; width:100%; height:auto;" />
+    </div>
+  </header>
+
+  <!-- ============ VALUE STRIP ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:20px 32px 8px;">
+    <div class="kl-value" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px;">
+      {[
+        'Cut costs and streamline shop-floor processes',
+        'Track batches, serials and expiry with full traceability',
+        'Run your inventory from iPad, iPhone or the web — even offline',
+        'Let orders draft themselves the moment stock runs low',
+      ].map((text) => (
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="flex:none; width:24px; height:24px; border-radius:7px; background:rgba(53,164,107,.14); color:#1F7D4D; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;">✓</span>
+          <span style="font-size:15px; color:var(--text); font-weight:500;">{text}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <section id="how" style="max-width:1200px; margin:0 auto; padding:72px 32px 24px;">
+    <div style="max-width:640px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">How it works</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.08; letter-spacing:-.02em; margin:12px 0 0; color:var(--text);">Scan it in, scan it out. The board does the thinking.</h2>
+      <p style="font-size:17px; line-height:1.55; color:var(--text-2); margin:16px 0 0;">Install Kanban Live on a barcode scanner, an iPad or your phone and scan everything as it moves — online or off. You get an instant, always-current snapshot of stock across every site, whatever it's stored in.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-top:36px;">
+      {[
+        { n: '01', h: 'Scan stock as it moves', p: 'Every item in and out is a scan. A GS1 DataMatrix captures product, lot and expiry in one read; anything unlabelled falls back to a tap. No spreadsheets, no manual counts.' },
+        { n: '02', h: 'Every location signals', p: 'Bins, shelves, reels, containers, carts — each one reports its own status against a kanban, min–max or reorder-point rule. Drop past the trigger and the card flips.' },
+        { n: '03', h: 'Orders draft themselves', p: 'A trip drafts a line on a purchase order to your supplier, or a transfer order from your own warehouse. Your buyer reviews, approves and sends — nothing over-orders.' },
+      ].map((step) => (
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:26px; box-shadow:var(--shadow);">
+          <div style="font-family:'Space Grotesk',sans-serif; font-size:14px; font-weight:700; color:var(--accent);">{step.n}</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; margin:12px 0 8px; color:var(--text);">{step.h}</h3>
+          <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">{step.p}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ FEATURES ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:64px 32px 24px;">
+    <div style="max-width:640px; margin-bottom:36px;">
+      <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">What's inside</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.08; letter-spacing:-.02em; margin:12px 0 0; color:var(--text);">One engine. Every industry, every store, every order.</h2>
+      <p style="font-size:17px; line-height:1.55; color:var(--text-2); margin:16px 0 0;">The distinctive scan-driven kanban flow you know, now with the tracking, policies and ordering that lean manufacturers, MROs, healthcare and warehouse teams run on.</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px;">
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; align-items:flex-end; gap:5px; margin-bottom:18px; height:28px;"><span style="width:24px;height:16px;border-radius:4px;border:2px solid var(--accent);"></span><span style="width:18px;height:22px;border-radius:4px;border:2px solid var(--accent-2);"></span><span style="width:14px;height:28px;border-radius:4px;border:2px solid #35A46B;"></span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Any store, any industry</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">Aerospace bins, hospital shelves, reels, drums, carts, vans — model your whole operation as one typed location tree, any depth. Panels still render as the iPad grid you know.</p>
+      </div>
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; gap:6px; margin-bottom:18px;"><span style="font-size:11px; font-weight:700; color:#B47100; background:rgba(245,166,35,.16); padding:3px 8px; border-radius:6px;">Lot A2419</span><span style="font-size:11px; font-weight:700; color:#1F7D4D; background:rgba(53,164,107,.14); padding:3px 8px; border-radius:6px;">FEFO</span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Batch, serial &amp; expiry</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">Full lot and serial traceability with per-location balances. Pick earliest-expiry first, get ahead of use-by dates with alerts, and answer "which locations hold lot X?" in one query.</p>
+      </div>
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; gap:5px; margin-bottom:18px;"><span style="width:10px;height:10px;border-radius:50%;background:#E5372A;"></span><span style="width:10px;height:10px;border-radius:50%;background:#F5A623;"></span><span style="width:10px;height:10px;border-radius:50%;background:#35A46B;"></span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Smart replenishment</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">Set kanban, min–max or reorder-point per location. Each one trips the instant available stock dips — counting what's already inbound, so nothing double-orders.</p>
+      </div>
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; flex-direction:column; gap:4px; margin-bottom:18px; width:34px;"><span style="height:4px;border-radius:2px;background:var(--accent);"></span><span style="height:4px;border-radius:2px;background:var(--border-strong);"></span><span style="height:4px;border-radius:2px;background:var(--border-strong);width:70%;"></span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Purchase &amp; transfer orders</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">Trips auto-draft a purchase order to your supplier, or a transfer order for direct line feed from your own warehouse. Twenty bin scans become one PO. You approve and send.</p>
+      </div>
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; align-items:flex-end; gap:2px; margin-bottom:18px; height:26px;"><span style="width:3px;height:100%;background:var(--text);"></span><span style="width:2px;height:100%;background:var(--text);"></span><span style="width:5px;height:100%;background:var(--text);"></span><span style="width:2px;height:100%;background:var(--text);"></span><span style="width:4px;height:100%;background:var(--text);"></span><span style="width:2px;height:100%;background:var(--text);"></span><span style="width:6px;height:100%;background:var(--text);"></span><span style="width:3px;height:100%;background:var(--text);"></span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Scan-first &amp; offline</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">GS1 DataMatrix reads product, lot and expiry in one shot; manual entry covers everything else. Capture on the shop floor with no signal and it syncs cleanly, no duplicates.</p>
+      </div>
+
+      <div style="background:linear-gradient(160deg, var(--surface), var(--surface-2)); border:1px solid var(--border); border-radius:18px; padding:28px;">
+        <div style="display:flex; align-items:flex-end; gap:6px; margin-bottom:18px; height:28px;"><span style="width:8px;height:14px;border-radius:3px;background:var(--accent);"></span><span style="width:8px;height:22px;border-radius:3px;background:var(--accent-2);"></span><span style="width:8px;height:28px;border-radius:3px;background:#35A46B;"></span></div>
+        <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; margin:0 0 10px; color:var(--text);">Labels &amp; live reports</h3>
+        <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:0;">Print kanban cards, location and shelf-edge labels as built-in PDFs. Then read every scan, movement and order status back as live reports and one composed activity feed.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIAL ============ -->
+  <section id="customers" style="max-width:1200px; margin:0 auto; padding:56px 32px;">
+    <div style="background:#211C16; border-radius:24px; padding:clamp(32px,5vw,64px); position:relative; overflow:hidden;">
+      <span style="position:absolute; right:-40px; top:-40px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle, rgba(245,166,35,.22), transparent 70%);"></span>
+      <div style="font-family:'Space Grotesk',sans-serif; font-size:52px; line-height:1; color:var(--accent-2); font-weight:700;">"</div>
+      <blockquote style="margin:8px 0 0; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:clamp(22px,3vw,32px); line-height:1.32; letter-spacing:-.01em; color:#F6F2EC; max-width:900px; text-wrap:balance;">It's a foolproof system and, quite simply, the best use of technology in our business today.</blockquote>
+      <div style="display:flex; align-items:center; gap:14px; margin-top:28px;">
+        <span style="width:44px; height:44px; border-radius:50%; background:var(--accent-2); display:flex; align-items:center; justify-content:center; font-weight:700; color:#4A2E00;">CO</span>
+        <div>
+          <div style="font-weight:700; color:#F6F2EC; font-size:15px;">Chris Osborne</div>
+          <div style="color:#A89E90; font-size:14px;">Operations Director, Spectech</div>
+        </div>
+        <a href="/case-studies/" style="margin-left:auto; text-decoration:none; color:var(--accent-2); font-weight:600; font-size:15px;">Read the case study →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INTEGRATIONS ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:24px 32px 56px;">
+    <div class="kl-int" style="display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:center;">
+      <div>
+        <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">Fits your workflow</div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(26px,3.4vw,36px); line-height:1.1; letter-spacing:-.02em; margin:12px 0 0; color:var(--text);">Reduce human error at the scan.</h2>
+        <p style="font-size:16px; line-height:1.55; color:var(--text-2); margin:16px 0 0; max-width:460px;">It takes seconds to scan items accurately in and out. A GS1 DataMatrix captures product, lot and expiry in a single read; where labels are arbitrary, manual entry keeps things moving. Works with Socket Mobile and Linea Pro sleds, and links to your MRP/ERP.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:24px;">
+          {['GS1 DataMatrix', 'Socket Mobile', 'Linea Pro', 'MRP / ERP'].map((chip) => (
+            <span style="font-size:14px; font-weight:600; color:var(--text); background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:10px 16px;">{chip}</span>
+          ))}
+        </div>
+      </div>
+      <!-- barcode motif -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:34px; box-shadow:var(--shadow); display:flex; flex-direction:column; align-items:center; gap:18px;">
+        <div style="display:flex; align-items:flex-end; gap:3px; height:88px;">
+          {[3,2,5,2,3,6,2,4,2,5,3,2,6,2,3,4,2,5].map((w) => (
+            <span style={`width:${w}px;height:100%;background:var(--text);`}></span>
+          ))}
+        </div>
+        <div style="font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:14px; letter-spacing:.24em; color:var(--text-2);">14579000134</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRICING CTA ============ -->
+  <section id="pricing" style="max-width:1200px; margin:0 auto; padding:24px 32px 88px;">
+    <div style="background:linear-gradient(135deg, var(--accent), #F5A623); border-radius:24px; padding:clamp(36px,5vw,64px); text-align:center; box-shadow:0 30px 70px -30px var(--accent);">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,46px); line-height:1.05; letter-spacing:-.02em; margin:0; color:#2A1206; text-wrap:balance;">Make stock control effortless.</h2>
+      <p style="font-size:18px; line-height:1.5; color:#5A2A10; margin:16px auto 0; max-width:520px; font-weight:500;">Start a free trial today, or request a demo and we'll walk your team through it.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:30px;">
+        <a href="/pricing/" style="text-decoration:none; background:#2A1206; color:#FFF; font-size:16px; font-weight:600; padding:15px 28px; border-radius:12px;">See plans &amp; pricing</a>
+        <a href="/contact/" style="text-decoration:none; background:rgba(255,255,255,.85); color:#2A1206; font-size:16px; font-weight:600; padding:15px 28px; border-radius:12px;">Request a free demo</a>
+      </div>
+    </div>
+  </section>
+</Site>

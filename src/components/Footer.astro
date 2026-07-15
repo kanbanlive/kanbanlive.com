@@ -1,0 +1,49 @@
+---
+import Logo from './Logo.astro';
+const year = 2026;
+---
+<footer style="border-top:1px solid var(--border); background:var(--surface-2);">
+  <div class="kl-footer" style="max-width:1200px; margin:0 auto; padding:48px 32px; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:11px;">
+        <Logo width={28} height={25} />
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; letter-spacing:-.02em; color:var(--text);">Kanban Live</span>
+      </div>
+      <p style="font-size:14px; line-height:1.6; color:var(--text-2); margin:16px 0 0; max-width:280px;">Live inventory control for lean manufacturers, MROs, healthcare and warehouse teams.</p>
+    </div>
+    <div>
+      <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:14px;">Navigation</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Home</a>
+        <a href="/tour/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Tour</a>
+        <a href="/case-studies/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Case Studies</a>
+        <a href="/pricing/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Pricing</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:14px;">Company</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="/about/" style="text-decoration:none; color:var(--text-2); font-size:14px;">About</a>
+        <a href="/contact/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Contact</a>
+        <a href="/blog/" style="text-decoration:none; color:var(--text-2); font-size:14px;">Blog</a>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:14px;">Get in touch</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <a href="mailto:hello@kanbanlive.com" style="text-decoration:none; color:var(--text-2); font-size:14px;">hello@kanbanlive.com</a>
+        <span style="color:var(--text-2); font-size:14px; line-height:1.5;">Winchester, Hampshire<br>United Kingdom</span>
+      </div>
+    </div>
+  </div>
+  <div style="border-top:1px solid var(--border); padding:20px 32px;">
+    <div style="max-width:1200px; margin:0 auto; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; color:var(--text-2); font-size:13px;">
+      <span>© {year} Kanban Live Ltd. All rights reserved.</span>
+      <span style="display:flex; gap:8px;">
+        <a href="/terms/" style="text-decoration:none; color:var(--text-2);">Terms</a>
+        <span aria-hidden="true">·</span>
+        <a href="/privacy/" style="text-decoration:none; color:var(--text-2);">Privacy policy</a>
+      </span>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,30 @@
+---
+import Site from '../../layouts/Site.astro';
+import { getSortedPosts, postPath, formatDate } from '../../lib/blog';
+
+const posts = await getSortedPosts();
+---
+<Site
+  title="Blog"
+  description="News and updates from the Kanban Live team."
+>
+  <header style="max-width:820px; margin:0 auto; padding:40px 32px 0;">
+    <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">Blog</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(30px,4.2vw,46px); line-height:1.08; letter-spacing:-.03em; margin:14px 0 0; color:var(--text); text-wrap:balance;">News &amp; updates</h1>
+  </header>
+
+  <section style="max-width:820px; margin:0 auto; padding:36px 32px 72px;">
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      {posts.map((post) => (
+        <a href={postPath(post)} class="kl-lift" style="display:block; text-decoration:none; background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:28px; box-shadow:var(--shadow);">
+          <div style="font-size:13px; font-weight:600; color:var(--text-3); font-family:ui-monospace,'SF Mono',Menlo,monospace;">{formatDate(post.data.date)}</div>
+          <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; line-height:1.2; letter-spacing:-.01em; margin:8px 0 0; color:var(--text);">{post.data.title}</h2>
+          {post.data.description && (
+            <p style="font-size:15px; line-height:1.55; color:var(--text-2); margin:10px 0 0;">{post.data.description}</p>
+          )}
+          <span style="display:inline-block; margin-top:14px; color:var(--accent); font-weight:600; font-size:15px;">Read more →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+</Site>

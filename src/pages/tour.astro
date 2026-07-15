@@ -1,0 +1,149 @@
+---
+import Site from '../layouts/Site.astro';
+---
+<Site
+  title="Tour"
+  description="A closer look at Kanban Live — how we set things up with you, and what to expect from a foolproof, just-in-time inventory system anyone can use."
+>
+  <!-- ============ HERO ============ -->
+  <header class="kl-hero" style="max-width:1200px; margin:0 auto; padding:40px 32px 48px; display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center;">
+    <div>
+      <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">The tour</div>
+      <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(34px,4.6vw,52px); line-height:1.05; letter-spacing:-.03em; margin:14px 0 0; color:var(--text); text-wrap:balance;">A closer look at Kanban Live</h1>
+      <p style="font-size:17px; line-height:1.6; color:var(--text-2); margin:20px 0 0; max-width:520px;">Curious how Kanban Live works for your business — whatever you make, store or supply? This tour walks through how we set things up with you, and what to expect from our service. We've made it as easy as possible to run a foolproof, just-in-time system anyone can use.</p>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; margin-top:28px;">
+        <a href="/pricing/" class="kl-lift-2" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); font-size:16px; font-weight:600; padding:14px 24px; border-radius:12px; box-shadow:0 10px 24px -8px var(--accent);">See plans &amp; pricing</a>
+        <a href="/contact/" class="kl-lift-2" style="text-decoration:none; background:var(--surface); color:var(--text); font-size:16px; font-weight:600; padding:14px 24px; border-radius:12px; border:1px solid var(--border-strong);">Request a free demo</a>
+      </div>
+    </div>
+    <!-- REAL APP SCREENSHOT (summary view) -->
+    <div style="border-radius:18px; border:1px solid var(--border); box-shadow:var(--shadow-lg); overflow:hidden; background:var(--surface);">
+      <div style="display:flex; align-items:center; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); background:var(--surface-2);"><span style="width:11px; height:11px; border-radius:50%; background:#E5372A; opacity:.85;"></span><span style="width:11px; height:11px; border-radius:50%; background:#F5A623; opacity:.85;"></span><span style="width:11px; height:11px; border-radius:50%; background:#35A46B; opacity:.85;"></span><span style="margin-left:10px; font-size:12px; font-weight:600; color:var(--text-3); font-family:ui-monospace,'SF Mono',Menlo,monospace;">app.kanbanlive.com</span></div>
+      <img src="/screenshots/app-summary.png" width="907" height="540" alt="Kanban Live app — site summary dashboard showing empty levels, requires-stock and expiring lots, with draft orders for review" style="display:block; width:100%; height:auto;" />
+    </div>
+  </header>
+
+  <!-- ============ FEATURE ROWS ============ -->
+  <section style="max-width:1200px; margin:0 auto; padding:8px 32px;">
+
+    <!-- Easy Set-up -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); padding:22px;">
+        <div style="font-weight:700; font-size:15px; color:var(--text); margin-bottom:6px;">Import products</div>
+        <p style="font-size:13px; line-height:1.5; color:var(--text-2); margin:0 0 16px;">Upload your item master and we'll import it. The file should be a CSV with <span style="font-family:ui-monospace,monospace; font-size:12px; color:var(--text);">sku</span>, <span style="font-family:ui-monospace,monospace; font-size:12px; color:var(--text);">name</span>, <span style="font-family:ui-monospace,monospace; font-size:12px; color:var(--text);">base_uom</span> and tracking flags.</p>
+        <div style="border:2px dashed var(--border-strong); border-radius:12px; padding:22px; text-align:center; background:var(--surface-2);">
+          <div style="font-size:13px; font-weight:600; color:var(--text-2);">Drop <span style="font-family:ui-monospace,monospace; color:var(--accent);">products.csv</span> here</div>
+          <div style="font-size:12px; color:var(--text-3); margin-top:4px;">or browse to choose a file</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center; margin-top:16px;"><span style="background:var(--accent); color:var(--accent-ink); font-size:13px; font-weight:600; padding:9px 18px; border-radius:9px;">Import</span><span style="font-size:13px; color:var(--text-3);">cancel</span></div>
+      </div>
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">Easy set-up</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">Changing the software your business relies on every day seems like a big step. But with Kanban Live it's easy — we'll organise the data transfer while you carry on doing what you do best. Seed your location types once — sites, panels, shelves, reels, containers — and everything's in the cloud, ready to start maximising your inventory.</p>
+      </div>
+    </div>
+
+    <!-- Simple To Use -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">Simple to use</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">When you're leading change, it's hard to get buy-in on the shop floor — especially when your vision involves new systems. Give the team something easier to use and it's a different story. Kanban Live's iPad and iPhone apps mean a shallow learning curve and a logical, familiar control system that takes no time to master. Every location shows its scan state, policy and live on-hand against what's already on order.</p>
+      </div>
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden;">
+        <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--surface-2); font-weight:700; font-size:14px; color:var(--text);">Main Stores / DLF_1A / A4</div>
+        <div style="padding:18px; display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; justify-content:space-between; font-size:14px;"><span style="color:var(--text-3);">Policy</span><span style="color:var(--text); font-weight:500;">Kanban · refill 200</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:14px;"><span style="color:var(--text-3);">Product</span><span style="font-family:ui-monospace,monospace; color:var(--accent); font-weight:600;">AN3C20A</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:14px; gap:16px;"><span style="color:var(--text-3);">Description</span><span style="color:var(--text); font-weight:500; text-align:right;">Hex HD bolt CRS 10-32</span></div>
+          <div style="display:flex; justify-content:space-between; font-size:14px;"><span style="color:var(--text-3);">Unit of measure</span><span style="color:var(--text); font-weight:500;">Each</span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:14px;"><span style="color:var(--text-3);">Scan state</span><span style="display:flex; align-items:center; gap:8px;"><span style="font-size:13px; font-weight:600; color:var(--text); border:1px solid var(--border-strong); border-radius:7px; padding:5px 10px; background:var(--surface-2);">Requires stock</span><span style="width:10px;height:10px;border-radius:50%;background:#E5372A;"></span></span></div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:14px;"><span style="color:var(--text-3);">On hand / on order</span><span style="display:flex; align-items:center; gap:8px;"><span style="font-family:ui-monospace,monospace; font-size:13px; color:var(--text); border:1px solid var(--border-strong); border-radius:7px; padding:5px 12px;">40 / 200</span><span style="background:var(--accent); color:var(--accent-ink); font-size:13px; font-weight:600; padding:6px 14px; border-radius:8px;">Update</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ordering, automated -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); padding:22px;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+          <span style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface-2); border:1px solid var(--border-strong); border-radius:9px; padding:8px 14px;">GS1 DataMatrix</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface-2); border:1px solid var(--border-strong); border-radius:9px; padding:8px 14px;">Socket Mobile</span>
+          <span style="font-size:13px; font-weight:600; color:var(--text); background:var(--surface-2); border:1px solid var(--border-strong); border-radius:9px; padding:8px 14px;">Linea Pro</span>
+        </div>
+        <div style="display:flex; gap:8px; margin-bottom:14px;"><span style="background:#2A6FDB; color:#fff; font-size:12px; font-weight:600; padding:8px 14px; border-radius:8px;">Approve &amp; send</span><span style="background:var(--surface-2); color:var(--text); border:1px solid var(--border-strong); font-size:12px; font-weight:600; padding:8px 14px; border-radius:8px;">Edit line</span></div>
+        <div style="border:1px solid var(--border); border-radius:10px; overflow:hidden;">
+          <div style="display:grid; grid-template-columns:1.4fr 1fr; gap:0; padding:9px 14px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.03em; color:var(--text-3); text-transform:uppercase;"><span>Draft PO-4471</span><span>Status</span></div>
+          <div style="display:grid; grid-template-columns:1.4fr 1fr; padding:10px 14px; border-top:1px solid var(--border); font-size:13px;"><span style="font-family:ui-monospace,monospace; color:var(--text);">AN3C20A</span><span style="color:#B47100; font-weight:600;">Draft</span></div>
+          <div style="display:grid; grid-template-columns:1.4fr 1fr; padding:10px 14px; border-top:1px solid var(--border); font-size:13px;"><span style="font-family:ui-monospace,monospace; color:var(--text);">AN3-15A</span><span style="color:#B47100; font-weight:600;">Draft</span></div>
+          <div style="display:grid; grid-template-columns:1.4fr 1fr; padding:10px 14px; border-top:1px solid var(--border); font-size:13px;"><span style="font-family:ui-monospace,monospace; color:var(--text);">AN4-14A</span><span style="color:#B47100; font-weight:600;">Draft</span></div>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">Ordering, automated</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">Your team just scans stock in and out with Socket Mobile or Linea Pro sleds — Kanban Live does the rest. As locations trip, it auto-drafts purchase orders to your suppliers and transfer orders from your own warehouse, consolidating twenty scans into one order. Your buyer reviews, approves and sends; at goods-in a GS1 scan captures product, lot and expiry in a single read. You can still run a classic twin-bin system for high-volume, low-cost parts.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA band -->
+  <section style="max-width:1200px; margin:0 auto; padding:24px 32px 56px;">
+    <div style="background:var(--surface-2); border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,3vw,34px); letter-spacing:-.02em; margin:0; color:var(--text);">Ready to see it on your shop floor?</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:22px;">
+        <a href="/pricing/" class="kl-lift-2" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; box-shadow:0 10px 24px -8px var(--accent);">See plans &amp; pricing</a>
+        <a href="/contact/" class="kl-lift-2" style="text-decoration:none; background:var(--surface); color:var(--text); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; border:1px solid var(--border-strong);">Request a free demo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- More feature rows -->
+  <section style="max-width:1200px; margin:0 auto; padding:0 32px 40px;">
+
+    <!-- Always Available -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">Always available, even offline</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">Wherever you are you have instant access to your inventory from phone, tablet or computer — and when the signal drops on the shop floor, scans and movements queue on the device and sync cleanly the moment you're back. No wasted trips for out-of-stock items, and an accurate number you can quote in a meeting. Every scan, movement and order status flows into one activity feed.</p>
+      </div>
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden;">
+        <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--surface-2); font-weight:700; font-size:14px; color:var(--text);">Activity feed</div>
+        <div style="display:grid; grid-template-columns:1fr 1.3fr 0.8fr; padding:9px 18px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--text-3);"><span>Timestamp</span><span>Location</span><span>Change</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.3fr 0.8fr; padding:11px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text-2);">17:37</span><span style="color:var(--accent); font-weight:500;">DLF_1B</span><span style="color:var(--text-2);">Scanned</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.3fr 0.8fr; padding:11px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text-2);">17:29</span><span style="color:var(--accent); font-weight:500;">DLF_1A</span><span style="color:var(--text-2);">Scanned</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.3fr 0.8fr; padding:11px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text-2);">16:31</span><span style="color:var(--accent); font-weight:500;">DLF_1A / A9</span><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#E5372A;"></span><span style="color:var(--text-3);">→</span><span style="width:8px;height:8px;border-radius:50%;background:#F5A623;"></span></span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.3fr 0.8fr; padding:11px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text-2);">16:31</span><span style="color:var(--accent); font-weight:500;">DLF_1A / A7</span><span style="display:flex; align-items:center; gap:5px;"><span style="width:8px;height:8px;border-radius:50%;background:#F5A623;"></span><span style="color:var(--text-3);">→</span><span style="width:8px;height:8px;border-radius:50%;background:#35A46B;"></span></span></div>
+      </div>
+    </div>
+
+    <!-- Scalable Growth -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden;">
+        <div style="display:grid; grid-template-columns:1.2fr repeat(4,1fr); padding:11px 18px; background:var(--surface-2); font-size:11px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; color:var(--text-3);"><span>Part</span><span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span></div>
+        <div style="display:grid; grid-template-columns:1.2fr repeat(4,1fr); padding:12px 18px; border-top:1px solid var(--border); font-size:12px; align-items:end;"><span style="font-family:ui-monospace,monospace; color:var(--text); align-self:center;">AN3-15A</span><span style="height:10px;background:var(--accent-2);border-radius:2px;opacity:.5;"></span><span style="height:20px;background:var(--accent-2);border-radius:2px;"></span><span style="height:14px;background:var(--accent-2);border-radius:2px;opacity:.7;"></span><span style="height:24px;background:var(--accent);border-radius:2px;"></span></div>
+        <div style="display:grid; grid-template-columns:1.2fr repeat(4,1fr); padding:12px 18px; border-top:1px solid var(--border); font-size:12px; align-items:end;"><span style="font-family:ui-monospace,monospace; color:var(--text); align-self:center;">AN3C20A</span><span style="height:16px;background:var(--accent-2);border-radius:2px;opacity:.6;"></span><span style="height:26px;background:var(--accent);border-radius:2px;"></span><span style="height:12px;background:var(--accent-2);border-radius:2px;opacity:.6;"></span><span style="height:18px;background:var(--accent-2);border-radius:2px;opacity:.8;"></span></div>
+        <div style="display:grid; grid-template-columns:1.2fr repeat(4,1fr); padding:12px 18px; border-top:1px solid var(--border); font-size:12px; align-items:end;"><span style="font-family:ui-monospace,monospace; color:var(--text); align-self:center;">AN4-14A</span><span style="height:22px;background:var(--accent-2);border-radius:2px;"></span><span style="height:14px;background:var(--accent-2);border-radius:2px;opacity:.7;"></span><span style="height:28px;background:var(--accent);border-radius:2px;"></span><span style="height:10px;background:var(--accent-2);border-radius:2px;opacity:.5;"></span></div>
+        <div style="display:grid; grid-template-columns:1.2fr repeat(4,1fr); padding:12px 18px; border-top:1px solid var(--border); font-size:12px; align-items:end;"><span style="font-family:ui-monospace,monospace; color:var(--text); align-self:center;">AN4-6A</span><span style="height:12px;background:var(--accent-2);border-radius:2px;opacity:.6;"></span><span style="height:18px;background:var(--accent-2);border-radius:2px;opacity:.8;"></span><span style="height:24px;background:var(--accent);border-radius:2px;"></span><span style="height:20px;background:var(--accent-2);border-radius:2px;"></span></div>
+      </div>
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">Scalable growth</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">Worrying about the size of your inventory? Need the option to scale up or down when the time is right? Kanban Live offers flexible plans for any size of business. And because we don't insist on contracts, we can grow with you or shrink with you — whichever, whenever is best for you.</p>
+      </div>
+    </div>
+
+    <!-- No User Limits -->
+    <div class="kl-row" style="display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; padding:44px 0; border-top:1px solid var(--border);">
+      <div>
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:26px; letter-spacing:-.02em; margin:0; color:var(--text);">No user limits</h2>
+        <p style="font-size:16px; line-height:1.6; color:var(--text-2); margin:14px 0 0;">Businesses have different needs, and it isn't fair to impose user limits. We charge only for the number of active locations you track — so you can stay as flexible as you like and bring your whole team on board at no extra cost.</p>
+      </div>
+      <div style="border-radius:16px; border:1px solid var(--border); background:var(--surface); box-shadow:var(--shadow); overflow:hidden;">
+        <div style="padding:14px 18px; border-bottom:1px solid var(--border); background:var(--surface-2); font-weight:700; font-size:14px; color:var(--text);">Users</div>
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; padding:9px 18px; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--text-3);"><span>Name</span><span>Email</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; padding:12px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text); font-weight:500;">Warehouse iPad</span><span style="color:var(--accent);">stores@kanbanlive.com</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; padding:12px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text); font-weight:500;">Chris Richards</span><span style="color:var(--accent);">chris@kanbanlive.com</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; padding:12px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text); font-weight:500;">Line Supervisor</span><span style="color:var(--accent);">line@kanbanlive.com</span></div>
+        <div style="display:grid; grid-template-columns:1fr 1.4fr; padding:12px 18px; border-top:1px solid var(--border); font-size:13px; align-items:center;"><span style="color:var(--text); font-weight:500;">Goods In</span><span style="color:var(--accent);">goodsin@kanbanlive.com</span></div>
+      </div>
+    </div>
+  </section>
+</Site>

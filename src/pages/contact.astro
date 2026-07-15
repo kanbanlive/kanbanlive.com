@@ -1,0 +1,58 @@
+---
+import Site from '../layouts/Site.astro';
+
+// Reuse the existing Formspree endpoint + field names from the previous site so
+// submissions keep flowing to the same inbox.
+const FORM_ACTION = 'https://formspree.io/f/chris@kanbanlive.com';
+---
+<Site
+  title="Contact"
+  description="We'd love to hear from you. Drop us a message and we'll get back to you shortly — tell us your industry and we'll tailor a demo to how you store and move stock."
+>
+  <!-- ============ HEADER ============ -->
+  <header style="max-width:1000px; margin:0 auto; padding:40px 32px 0;">
+    <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">Contact</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(32px,4.6vw,50px); line-height:1.06; letter-spacing:-.03em; margin:14px 0 0; color:var(--text); text-wrap:balance;">We'd love to hear from you</h1>
+    <p style="font-size:18px; line-height:1.55; color:var(--text-2); margin:18px 0 0;">Drop us a message and we'll get back to you shortly. Tell us your industry and we'll tailor a demo to how you store and move stock.</p>
+  </header>
+
+  <!-- ============ FORM + DETAILS ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:40px 32px 64px;">
+    <div class="kl-contact" style="display:grid; grid-template-columns:1.3fr 1fr; gap:24px; align-items:start;">
+
+      <!-- Form -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:clamp(28px,4vw,40px); box-shadow:var(--shadow);">
+        <form action={FORM_ACTION} method="post" accept-charset="UTF-8" style="display:flex; flex-direction:column; gap:18px;">
+          <div>
+            <label for="contact_name" style="display:block; font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:8px;">Name <span style="color:var(--accent);">*</span></label>
+            <input class="kl-field" id="contact_name" name="name" type="text" placeholder="Your name" required autocomplete="name" />
+          </div>
+          <div>
+            <label for="contact_email" style="display:block; font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:8px;">Email address <span style="color:var(--accent);">*</span></label>
+            <input class="kl-field" id="contact_email" name="email_address" type="email" placeholder="you@company.com" required autocomplete="email" />
+          </div>
+          <div>
+            <label for="contact_message" style="display:block; font-size:13px; font-weight:600; color:var(--text-2); margin-bottom:8px;">Your message <span style="color:var(--accent);">*</span></label>
+            <textarea class="kl-field" id="contact_message" name="message" rows="5" placeholder="How can we help?" required style="resize:vertical; min-height:120px;"></textarea>
+          </div>
+          <button type="submit" class="kl-lift-2" style="align-self:flex-start; background:var(--accent); color:var(--accent-ink); font-family:'Hanken Grotesk',sans-serif; font-size:16px; font-weight:600; padding:14px 28px; border:none; border-radius:12px; cursor:pointer; box-shadow:0 10px 24px -8px var(--accent);">Send away</button>
+        </form>
+      </div>
+
+      <!-- Details -->
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:26px; box-shadow:var(--shadow);">
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; color:var(--text); margin-bottom:14px;">Contact details</div>
+          <div style="font-size:15px; line-height:1.7; color:var(--text-2);">Kanban Live Ltd<br>23 Fairfield Road<br>Winchester<br>Hampshire, SO22 6SF<br>United Kingdom</div>
+          <div style="height:1px; background:var(--border); margin:18px 0;"></div>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <a href="mailto:hello@kanbanlive.com" style="text-decoration:none; color:var(--accent); font-size:15px; font-weight:600;">hello@kanbanlive.com</a>
+          </div>
+        </div>
+        <div style="background:var(--surface-2); border:1px solid var(--border); border-radius:18px; padding:22px;">
+          <div style="font-size:13px; line-height:1.7; color:var(--text-3);">Kanban Live Ltd is a limited company registered in England and Wales.<br>Company no. 08084159 · VAT no. 141127259</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Site>

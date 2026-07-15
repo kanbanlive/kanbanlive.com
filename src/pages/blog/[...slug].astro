@@ -1,0 +1,27 @@
+---
+import { render } from 'astro:content';
+import Site from '../../layouts/Site.astro';
+import { getSortedPosts, postPath, formatDate } from '../../lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getSortedPosts();
+  return posts.map((post) => ({
+    // Strip the /blog/ prefix and trailing slash to feed the rest param.
+    params: { slug: postPath(post).replace(/^\/blog\//, '').replace(/\/$/, '') },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+<Site title={post.data.title} description={post.data.description}>
+  <article style="max-width:760px; margin:0 auto; padding:40px 32px 72px;">
+    <a href="/blog/" style="text-decoration:none; color:var(--text-2); font-size:14px; font-weight:600;">← Back to blog</a>
+    <div style="font-size:13px; font-weight:600; color:var(--text-3); font-family:ui-monospace,'SF Mono',Menlo,monospace; margin-top:24px;">{formatDate(post.data.date)}</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.1; letter-spacing:-.02em; margin:10px 0 28px; color:var(--text); text-wrap:balance;">{post.data.title}</h1>
+    <div class="kl-prose">
+      <Content />
+    </div>
+  </article>
+</Site>
