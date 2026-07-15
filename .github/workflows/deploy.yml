@@ -1,11 +1,9 @@
 name: Deploy
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
-# Only one deploy at a time; a newer push supersedes an in-flight run.
+# Only one deploy at a time; a newer run supersedes an in-flight one.
 concurrency:
   group: deploy-main
   cancel-in-progress: true
