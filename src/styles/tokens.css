@@ -1,0 +1,42 @@
+/*
+ * Kanban Live design tokens.
+ * Light is the default (:root); dark is applied by setting data-theme="dark"
+ * on <html> (see the no-flash bootstrap in Site.astro).
+ * The prototype drove these as inline custom properties; here they live once.
+ */
+:root {
+  --bg: #F6F2EC;
+  --surface: #FFFFFF;
+  --surface-2: #FBF8F3;
+  --border: #EAE3D8;
+  --border-strong: #DDD3C4;
+  --text: #211C16;
+  --text-2: #6E6459;
+  --text-3: #9A8F81;
+  --accent: #E8442E;
+  --accent-2: #F5A623;
+  --accent-ink: #FFFFFF;
+  --nav-bg: rgba(246, 242, 236, 0.82);
+  --shadow: 0 1px 2px rgba(33, 28, 22, .05), 0 14px 34px -14px rgba(33, 28, 22, .16);
+  --shadow-lg: 0 40px 90px -34px rgba(33, 28, 22, .4);
+  /* focus ring for form fields — tuned to the light-theme accent */
+  --focus-ring: 0 0 0 3px rgba(232, 68, 46, .14);
+}
+
+:root[data-theme="dark"] {
+  --bg: #17130E;
+  --surface: #211C15;
+  --surface-2: #1C1710;
+  --border: #312A20;
+  --border-strong: #3E3527;
+  --text: #F6F2EC;
+  --text-2: #B0A594;
+  --text-3: #7E7362;
+  --accent: #F0503B;
+  --accent-2: #F5A623;
+  --accent-ink: #221206;
+  --nav-bg: rgba(23, 19, 14, 0.82);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 14px 34px -14px rgba(0, 0, 0, .6);
+  --shadow-lg: 0 40px 90px -34px rgba(0, 0, 0, .75);
+  --focus-ring: 0 0 0 3px rgba(240, 80, 59, .18);
+}

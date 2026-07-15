@@ -1,0 +1,14 @@
+---
+import Site from '../layouts/Site.astro';
+---
+<Site title="Page not found" description="The page you were looking for could not be found.">
+  <section style="max-width:640px; margin:0 auto; padding:80px 32px 96px; text-align:center;">
+    <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:clamp(64px,12vw,120px); line-height:1; letter-spacing:-.03em; color:var(--accent);">404</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,3vw,32px); letter-spacing:-.02em; margin:18px 0 0; color:var(--text);">We couldn't find that page</h1>
+    <p style="font-size:17px; line-height:1.55; color:var(--text-2); margin:14px 0 0;">The link may be broken, or the page may have moved. Let's get you back on track.</p>
+    <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:30px;">
+      <a href="/" class="kl-lift-2" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; box-shadow:0 10px 24px -8px var(--accent);">Back to home</a>
+      <a href="/contact/" class="kl-lift-2" style="text-decoration:none; background:var(--surface); color:var(--text); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; border:1px solid var(--border-strong);">Contact us</a>
+    </div>
+  </section>
+</Site>

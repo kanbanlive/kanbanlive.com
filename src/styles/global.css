@@ -1,0 +1,153 @@
+/*
+ * Global stylesheet. Mirrors the interactive + responsive pieces that the
+ * prototype kept in each page's <style> block (grid collapses via class hooks,
+ * mobile nav, field styling, hover lifts, ::selection). Static layout stays as
+ * token-driven inline styles on the elements, exactly like the reference files.
+ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px; /* clears the sticky nav on hash jumps */
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background .35s ease, color .35s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+::selection { background: #F5A623; color: #1F1B17; }
+
+img { max-width: 100%; }
+
+/* ---- Hover lifts (prototype used per-element style-hover) ---- */
+.kl-lift { transition: transform .15s ease; }
+.kl-lift:hover { transform: translateY(-1px); }
+.kl-lift-2 { transition: transform .15s ease; }
+.kl-lift-2:hover { transform: translateY(-2px); }
+
+/* ---- Form fields (design-system .ds-field pattern) ---- */
+.ds-field,
+.kl-field {
+  width: 100%;
+  font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  padding: 11px 13px;
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.kl-field { font-size: 15px; padding: 12px 14px; }
+.ds-field::placeholder,
+.kl-field::placeholder { color: var(--text-3); }
+.ds-field:focus,
+.kl-field:focus {
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+
+/* ---- Long-form prose (legal pages, blog posts) ---- */
+.kl-prose { color: var(--text-2); font-size: 16px; line-height: 1.7; }
+.kl-prose > :first-child { margin-top: 0; }
+.kl-prose h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -.02em;
+  color: var(--text);
+  margin: 40px 0 12px;
+}
+.kl-prose h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  letter-spacing: -.01em;
+  color: var(--text);
+  margin: 32px 0 10px;
+}
+.kl-prose p { margin: 0 0 16px; }
+.kl-prose ul, .kl-prose ol { margin: 0 0 18px; padding-left: 22px; }
+.kl-prose li { margin: 0 0 10px; }
+.kl-prose li::marker { color: var(--text-3); }
+.kl-prose a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.kl-prose a:hover { text-decoration: underline; }
+.kl-prose strong { color: var(--text); }
+.kl-prose img {
+  display: block;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin: 24px 0;
+}
+.kl-prose code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: .9em;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+
+/* ---- Mobile nav burger (hidden on desktop) ---- */
+.kl-burger { display: none; }
+
+/* =========================================================
+   Responsive grid collapses — class hooks carried from the
+   reference files. Each override matches its inline grid.
+   ========================================================= */
+@media (max-width: 1100px) {
+  .kl-value { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 980px) {
+  .kl-price { grid-template-columns: 1fr 1fr !important; }
+}
+@media (max-width: 900px) {
+  .kl-footer { grid-template-columns: 1fr 1fr !important; }
+  .kl-int, .kl-hero, .kl-row, .kl-cs, .kl-faq, .kl-people,
+  .kl-contact, .kl-brand, .kl-stats { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 860px) {
+  nav .kl-navlinks {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 28px;
+    box-shadow: var(--shadow);
+  }
+  nav .kl-navlinks[data-open="true"] { display: flex !important; }
+  .kl-burger { display: flex !important; }
+  .kl-loginlink { display: none !important; }
+  .kl-price { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 760px) {
+  .kl-product { overflow-x: auto !important; }
+}
+@media (max-width: 560px) {
+  .kl-value { grid-template-columns: 1fr !important; }
+  .kl-footer { grid-template-columns: 1fr !important; }
+}

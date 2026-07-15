@@ -1,0 +1,101 @@
+---
+// Self-hosted fonts (README: prefer @fontsource over the Google Fonts CDN).
+import '@fontsource/space-grotesk/400.css';
+import '@fontsource/space-grotesk/500.css';
+import '@fontsource/space-grotesk/600.css';
+import '@fontsource/space-grotesk/700.css';
+import '@fontsource/hanken-grotesk/400.css';
+import '@fontsource/hanken-grotesk/500.css';
+import '@fontsource/hanken-grotesk/600.css';
+import '@fontsource/hanken-grotesk/700.css';
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set true on the home page so the title isn't suffixed. */
+  isHome?: boolean;
+}
+
+const {
+  title = 'Kanban Live',
+  description = 'Live inventory control for lean manufacturers, MROs, healthcare and warehouse teams. Scan stock in and out, track batches and expiry, and let orders draft themselves.',
+  isHome = false,
+} = Astro.props;
+
+const pageTitle = isHome ? title : `${title} · Kanban Live`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/screenshots/app-grid.png', Astro.site).href;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="theme-color" content="#F6F2EC" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#17130E" media="(prefers-color-scheme: dark)" />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Kanban Live" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="alternate" type="application/rss+xml" title="Kanban Live blog" href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Apply the persisted theme before paint to avoid a flash. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('kl-theme');
+          if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <Nav />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Theme toggle: persists to localStorage['kl-theme'] and swaps the icon
+      // (☾ in light → click for dark, ☀ in dark). The pre-paint inline script
+      // in <head> handles the no-flash read on load.
+      const root = document.documentElement;
+      const current = () => (root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light');
+      const btn = document.getElementById('kl-theme-toggle');
+      const syncIcon = () => {
+        if (btn) btn.textContent = current() === 'dark' ? '☀' : '☾';
+      };
+      syncIcon();
+      btn?.addEventListener('click', () => {
+        const next = current() === 'dark' ? 'light' : 'dark';
+        if (next === 'dark') root.setAttribute('data-theme', 'dark');
+        else root.removeAttribute('data-theme');
+        try {
+          localStorage.setItem('kl-theme', next);
+        } catch (e) {}
+        syncIcon();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+---
+import Site from '../layouts/Site.astro';
+---
+<Site
+  title="About"
+  description="Founded in 2012, Kanban Live helps customers meet their supply-chain challenges head on — built on the kanban system of lean stock control, developed robustly with simplicity in mind."
+>
+  <!-- ============ INTRO ============ -->
+  <header style="max-width:1000px; margin:0 auto; padding:40px 32px 0;">
+    <div style="font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--accent);">About us</div>
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(32px,4.6vw,50px); line-height:1.08; letter-spacing:-.03em; margin:14px 0 0; color:var(--text); text-wrap:balance;">Meeting supply-chain challenges with the intelligent use of technology</h1>
+    <p style="font-size:18px; line-height:1.6; color:var(--text-2); margin:24px 0 0;">Founded in 2012, Kanban Live helps our customers meet their supply-chain challenges head on. Based on the kanban system of lean stock control, it's been developed robustly with simplicity in mind. What began on the aerospace shop floor now runs in hospitals, warehouses and workshops — tracking bins, shelves, reels, drums and carts across every kind of stockroom.</p>
+    <p style="font-size:18px; line-height:1.6; color:var(--text-2); margin:16px 0 0;">Try it for free and see what you think, or get in touch to arrange a live demo. We're convinced you'll be amazed by the benefits Kanban Live brings to your business.</p>
+  </header>
+
+  <!-- ============ STATS STRIP ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:36px 32px 0;">
+    <div class="kl-stats" style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+      {[
+        { big: '2012', label: 'Founded' },
+        { big: 'Lean', label: 'Built on the kanban system' },
+        { big: '24/7', label: 'Always-on cloud access' },
+      ].map((stat) => (
+        <div style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:var(--shadow);">
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:34px; letter-spacing:-.02em; color:var(--accent);">{stat.big}</div>
+          <div style="font-size:14px; color:var(--text-2); margin-top:4px;">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- ============ PEOPLE ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:64px 32px 40px;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,3.2vw,34px); letter-spacing:-.02em; margin:0 0 28px; color:var(--text);">The people behind it</h2>
+    <div class="kl-people" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:30px; box-shadow:var(--shadow);">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent-2)); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff; flex:none;">CR</span>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:var(--text);">Chris Richards</div>
+            <div style="font-size:14px; color:var(--accent);">Founder &amp; CEO</div>
+          </div>
+        </div>
+        <p style="font-size:15px; line-height:1.6; color:var(--text-2); margin:18px 0 0;">Chris is a passionate software developer with over 20 years' experience across aerospace, financial and telecoms. He's worked at companies large and small, launched products from scratch, and held project-leader and management roles before starting Kanban Live.</p>
+      </div>
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:30px; box-shadow:var(--shadow);">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span style="width:56px; height:56px; border-radius:50%; background:linear-gradient(135deg,#35A46B,#8FD4AE); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#0D3B24; flex:none;">CW</span>
+          <div>
+            <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:var(--text);">Chris Wharton</div>
+            <div style="font-size:14px; color:var(--accent);">UI Designer &amp; Front-end Developer</div>
+          </div>
+        </div>
+        <p style="font-size:15px; line-height:1.6; color:var(--text-2); margin:18px 0 0;">Chris has been designing for the web for over 10 years. He's built websites and web apps for an array of clients across financial, business, start-up, marketing and law — bringing that craft to every corner of Kanban Live.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:0 32px 64px;">
+    <div style="background:var(--surface-2); border:1px solid var(--border); border-radius:20px; padding:40px; text-align:center;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,3vw,32px); letter-spacing:-.02em; margin:0; color:var(--text);">Want to see Kanban Live in action?</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:22px;">
+        <a href="/pricing/" class="kl-lift-2" style="text-decoration:none; background:var(--accent); color:var(--accent-ink); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; box-shadow:0 10px 24px -8px var(--accent);">Start free trial</a>
+        <a href="/contact/" class="kl-lift-2" style="text-decoration:none; background:var(--surface); color:var(--text); font-size:16px; font-weight:600; padding:14px 26px; border-radius:12px; border:1px solid var(--border-strong);">Arrange a demo</a>
+      </div>
+    </div>
+  </section>
+</Site>

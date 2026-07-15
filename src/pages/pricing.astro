@@ -1,0 +1,87 @@
+---
+import Site from '../layouts/Site.astro';
+import { SIGNUP_URL } from '../lib/links';
+
+const faqs = [
+  { q: 'How does the 30-day free trial work?', a: "Sign up to a paying plan and cancel within 30 days and you won't be charged a thing. You can cancel any time; after that you're billed for the rest of the month. Refunds can't be issued once the free trial has finished." },
+  { q: 'Is my data secure?', a: "We follow accepted industry standards to protect your data in transit and at rest. All plans include SSL encryption. We don't store your card details and use a secure, PCI-compliant payment gateway to authorise payments." },
+  { q: 'Do I get a free trial if I upgrade?', a: "If you upgrade from a free account to a paying account you aren't eligible for the 30-day trial. The trial applies when you sign up to a paying plan now. You can always downgrade later if you choose." },
+  { q: 'Can I change my plan any time?', a: 'Yes. Just head to the Account tab on your dashboard and switch plans whenever you need to — up or down, as your inventory changes.' },
+  { q: 'Which browsers are supported?', a: 'Kanban Live works with all modern browsers — the latest versions of Chrome, Firefox, Safari and Edge on desktop, tablet and mobile.' },
+  { q: 'What payments do you accept?', a: 'We currently accept Visa, Mastercard and American Express through our secure payment gateway. Annual invoicing is available on the Scale plan.' },
+];
+---
+<Site
+  title="Pricing"
+  description="Pay per tracked location, not per person. Unlimited users on every plan. Try any plan free for 30 days, with no obligation to continue."
+>
+  <!-- ============ HEADER ============ -->
+  <header style="max-width:900px; margin:0 auto; padding:40px 32px 8px; text-align:center;">
+    <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(32px,4.6vw,52px); line-height:1.08; letter-spacing:-.03em; margin:0; color:var(--text); text-wrap:balance;">Pay per location. Month by month. <span style="color:var(--accent);">Unlimited users.</span></h1>
+    <p style="font-size:18px; line-height:1.55; color:var(--text-2); margin:20px 0 0;">Pay per tracked location, not per person. Try any plan free for 30 days, with no obligation to continue.</p>
+  </header>
+
+  <!-- ============ PRICING CARDS ============ -->
+  <section style="max-width:1080px; margin:0 auto; padding:44px 32px 8px;">
+    <div class="kl-price" style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start;">
+
+      <!-- Starter -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:32px 28px; box-shadow:var(--shadow);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:var(--text);">Starter</div>
+        <div style="display:flex; align-items:baseline; gap:4px; margin-top:16px;"><span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; letter-spacing:-.02em; color:var(--text);">£19</span><span style="font-size:15px; color:var(--text-3);">per month</span></div>
+        <div style="height:1px; background:var(--border); margin:24px 0;"></div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          {['Up to 100 tracked locations', 'Unlimited users', 'Kanban replenishment', 'iPad, iPhone & web apps'].map((f) => (
+            <div style="display:flex; gap:10px; align-items:center; font-size:15px; color:var(--text);"><span style="color:var(--accent-2); font-weight:800;">✓</span>{f}</div>
+          ))}
+        </div>
+        <a href={SIGNUP_URL} class="kl-lift" style="display:block; text-align:center; text-decoration:none; margin-top:26px; background:var(--surface-2); color:var(--text); border:1px solid var(--border-strong); font-size:15px; font-weight:600; padding:13px; border-radius:11px;">Try it free</a>
+      </div>
+
+      <!-- Growth (popular) -->
+      <div style="background:var(--surface); border:2px solid var(--accent); border-radius:18px; padding:0; box-shadow:var(--shadow-lg); overflow:hidden; position:relative;">
+        <div style="background:var(--accent); color:var(--accent-ink); text-align:center; font-size:13px; font-weight:700; letter-spacing:.03em; padding:8px;">Our most popular plan</div>
+        <div style="padding:32px 28px;">
+          <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:var(--text);">Growth</div>
+          <div style="display:flex; align-items:baseline; gap:4px; margin-top:16px;"><span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:52px; letter-spacing:-.02em; color:var(--text);">£49</span><span style="font-size:15px; color:var(--text-3);">per month</span></div>
+          <div style="height:1px; background:var(--border); margin:24px 0;"></div>
+          <div style="display:flex; flex-direction:column; gap:12px;">
+            {['Up to 500 tracked locations', 'Unlimited users', 'Min–max & reorder-point policies', 'Auto-drafted purchase & transfer orders', 'Scanner & GS1 capture', 'Lots, serials & expiry tracking'].map((f) => (
+              <div style="display:flex; gap:10px; align-items:center; font-size:15px; color:var(--text);"><span style="color:var(--accent-2); font-weight:800;">✓</span>{f}</div>
+            ))}
+          </div>
+          <a href={SIGNUP_URL} class="kl-lift" style="display:block; text-align:center; text-decoration:none; margin-top:26px; background:var(--accent); color:var(--accent-ink); font-size:15px; font-weight:600; padding:14px; border-radius:11px; box-shadow:0 10px 24px -8px var(--accent);">Try it free</a>
+        </div>
+      </div>
+
+      <!-- Scale -->
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:18px; padding:32px 28px; box-shadow:var(--shadow);">
+        <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; color:var(--text);">Scale</div>
+        <div style="display:flex; align-items:baseline; gap:4px; margin-top:16px;"><span style="font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:46px; letter-spacing:-.02em; color:var(--text);">£199</span><span style="font-size:15px; color:var(--text-3);">per month</span></div>
+        <div style="height:1px; background:var(--border); margin:24px 0;"></div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          {['Up to 5,000 tracked locations', 'Unlimited users', 'Everything in Growth', 'Multi-site, direct line feed & dedicated onboarding'].map((f) => (
+            <div style="display:flex; gap:10px; align-items:center; font-size:15px; color:var(--text);"><span style="color:var(--accent-2); font-weight:800;">✓</span>{f}</div>
+          ))}
+        </div>
+        <a href={SIGNUP_URL} class="kl-lift" style="display:block; text-align:center; text-decoration:none; margin-top:26px; background:var(--surface-2); color:var(--text); border:1px solid var(--border-strong); font-size:15px; font-weight:600; padding:13px; border-radius:11px;">Try it free</a>
+      </div>
+    </div>
+
+    <p style="text-align:center; font-size:16px; color:var(--text-2); margin:34px 0 0;">Save 10% by paying for a year in advance.</p>
+    <p style="text-align:center; font-size:16px; color:var(--text-2); margin:10px 0 0;">Larger plans available on request — <a href="/contact/" style="color:var(--accent); font-weight:600; text-decoration:none;">contact us</a> for more.</p>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section style="max-width:1000px; margin:0 auto; padding:64px 32px 40px;">
+    <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(26px,3.4vw,38px); letter-spacing:-.02em; text-align:center; margin:0 0 40px; color:var(--text);">Typical sign-up questions</h2>
+    <div class="kl-faq" style="display:grid; grid-template-columns:1fr 1fr; gap:36px 48px;">
+      {faqs.map((faq) => (
+        <div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:18px; color:var(--accent); margin:0 0 10px;">{faq.q}</h3>
+          <p style="font-size:15px; line-height:1.6; color:var(--text-2); margin:0;">{faq.a}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Site>
